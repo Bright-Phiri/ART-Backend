@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  qrcode: MyString
+  blood_type: MyString
+  temperature: 1.5
+  patient: one
+
+two:
+  qrcode: MyString
+  blood_type: MyString
+  temperature: 1.5
+  patient: two

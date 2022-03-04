@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_name: MyString
+  blood_type: MyString
+  temperature: 1.5
+  lab_order: one
+
+two:
+  patient_name: MyString
+  blood_type: MyString
+  temperature: 1.5
+  lab_order: two
