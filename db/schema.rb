@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_04_081221) do
+ActiveRecord::Schema.define(version: 2022_03_04_095745) do
 
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
@@ -35,6 +35,17 @@ ActiveRecord::Schema.define(version: 2022_03_04_081221) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "results", force: :cascade do |t|
+    t.string "patient_name"
+    t.string "blood_type"
+    t.float "temperature"
+    t.string "name"
+    t.integer "lab_order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lab_order_id"], name: "index_results_on_lab_order_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -46,4 +57,5 @@ ActiveRecord::Schema.define(version: 2022_03_04_081221) do
   end
 
   add_foreign_key "lab_orders", "patients"
+  add_foreign_key "results", "lab_orders"
 end

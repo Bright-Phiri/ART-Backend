@@ -4,10 +4,12 @@ one:
   patient_name: MyString
   blood_type: MyString
   temperature: 1.5
+  name: MyString
   lab_order: one
 
 two:
   patient_name: MyString
   blood_type: MyString
   temperature: 1.5
+  name: MyString
   lab_order: two

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
       resources :users
       post 'createaccount', action: :set_admin, controller: 'users'
       resources :patients do 
-        resources :lab_orders, except: :index
+        resources :lab_orders, except: :index do 
+          
+        end
       end
       get 'lab_orders', action: :index, controller: 'lab_orders'
     end
