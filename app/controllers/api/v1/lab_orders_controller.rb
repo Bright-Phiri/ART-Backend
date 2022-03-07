@@ -21,7 +21,7 @@ class Api::V1::LabOrdersController < ApplicationController
         if lab_order.persisted?
            render json: {status: 'success', message: 'lab order successfully added to patient', data: lab_order}, status: :created
         else
-           render json: {status: 'error', message: 'Failed to add lab order', errors: lab_order.errors.full_messages}, status: :unprocessable_entity
+           render json: {status: 'error', message: 'Failed to add lab order', errors: lab_order.errors.full_messages}
         end
     end
 
@@ -29,7 +29,7 @@ class Api::V1::LabOrdersController < ApplicationController
         if @lab_order.update(lab_order_params)
             render json: {status: 'success', message: 'lab order successfully updated', data: @lab_order}, status: :ok
         else
-            render json: {status: 'error', message: 'Failed to update lab order', errors: @lab_order.errors.full_messages}, status: :unprocessable_entity
+            render json: {status: 'error', message: 'Failed to update lab order', errors: @lab_order.errors.full_messages}
         end
     end
 

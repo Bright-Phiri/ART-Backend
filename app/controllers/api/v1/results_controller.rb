@@ -31,7 +31,7 @@ class Api::V1::ResultsController < ApplicationController
        if @results.update(results_params)
           render json: {status: 'success', message: 'Test results successfully updated', data: @results}, status: :ok
        else
-          render json: {status: 'error', message: 'Failed to update test results', errors: @user.errors.full_messages}, status: :unprocessable_entity
+          render json: {status: 'error', message: 'Failed to update test results', errors: @user.errors.full_messages}
        end
     end
 

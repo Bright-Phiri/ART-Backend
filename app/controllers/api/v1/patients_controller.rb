@@ -14,7 +14,7 @@ class Api::V1::PatientsController < ApplicationController
         if patient.save
             render json: {status: 'success', message: 'patient successfully added', data: patient}, status: :created
         else
-            render json: {status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages}, status: :unprocessable_entity
+            render json: {status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages}
         end
     end
 
@@ -22,7 +22,7 @@ class Api::V1::PatientsController < ApplicationController
         if @patient.update(patient_params)
             render json: {status: 'success', message: 'patient successfully updated', data: @patient}, status: :ok
         else
-            render json: {status: 'error', message: 'Failed to update patient', errors: @patient.errors.full_messages}, status: :unprocessable_entity
+            render json: {status: 'error', message: 'Failed to update patient', errors: @patient.errors.full_messages}
         end
     end
 

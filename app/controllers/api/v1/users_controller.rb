@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
         if user.save
            render json: {status: 'success', message: 'User successfully added', data: user}, status: :created
         else
-            render json: {status: 'error', message: 'Failed to add user', errors: user.errors.full_messages}, status: :unprocessable_entity
+            render json: {status: 'error', message: 'Failed to add user', errors: user.errors.full_messages}
         end
     end
 
@@ -23,7 +23,7 @@ class Api::V1::UsersController < ApplicationController
         if @user.update(user_params)
             render json: {status: 'success', message: 'User successfully updated', data: @user}, status: :ok
         else
-            render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}, status: :unprocessable_entity
+            render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
         end
     end
 
@@ -44,7 +44,7 @@ class Api::V1::UsersController < ApplicationController
             if user.save
                 render json: {status: 'success', message: 'Account successfully created', data: user}, status: :created
             else
-                render json: {status: 'error', message: 'Failed to create account', errors: user.errors.full_messages}, status: :unprocessable_entity
+                render json: {status: 'error', message: 'Failed to create account', errors: user.errors.full_messages}
             end
         end
     end
