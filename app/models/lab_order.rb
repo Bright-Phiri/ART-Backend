@@ -6,4 +6,5 @@ class LabOrder < ApplicationRecord
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: VALID_BLOOD_TYPES}
   validates :temperature, numericality: true
+  default_scope {order(:created_at).reverse_order}
 end
