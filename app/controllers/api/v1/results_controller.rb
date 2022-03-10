@@ -17,13 +17,18 @@ class Api::V1::ResultsController < ApplicationController
 
     def create
         lab_order = LabOrder.find(params[:lab_order_id])
-        patient = Patient.find(lab_order.patient_id)
-        patient_full_name = "#{patient.first_name} #{patient.last_name}"
-        results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, temperature: lab_order.temperature, name: params[:name])
-        if results.persisted?
-           render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
+        result = lab_order.result
+        if result.nil?
+            patient = Patient.find(lab_order.patient_id)
+            patient_full_name = "#{patient.first_name} #{patient.last_name}"
+            results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, temperature: lab_order.temperature, name: params[:name])
+            if results.persisted?
+               render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
+            else
+              render json: {status: 'error', message: 'Failed to add test results'}
+            end
         else
-          render json: {status: 'error', message: 'Failed to add test results'}
+            render json: {status: 'error', message: 'Lab Order Results already added'}
         end
     end
 
