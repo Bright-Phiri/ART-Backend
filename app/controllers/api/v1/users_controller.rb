@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    #before_action :authorized, only: [:auto_login]
+    before_action :authorized, except: [:set_admin, :login]
     before_action :set_user, only: [:show, :update, :destroy]
     
     def index

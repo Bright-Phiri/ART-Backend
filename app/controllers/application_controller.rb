@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-    #before_action :authorized
+    before_action :authorized
     include ExceptionHandler
     def encode_token(payload)
         JWT.encode(payload, Rails.application.secrets.secret_key_base)
