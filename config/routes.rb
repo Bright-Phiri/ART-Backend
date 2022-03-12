@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
       get 'lab_orders', action: :index, controller: 'lab_orders'
       get 'results', action: :index, controller: 'results'
+      get 'statistics', action: :stati, controller: 'reports'
     end
   end
 end
