@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       post 'createaccount', action: :set_admin, controller: 'users'
+      put 'changepassword/:id', action: :change_password, controller: 'users'
       post 'login', action: :login, controller: 'users'
       resources :patients do 
         resources :lab_orders, except: :index do 

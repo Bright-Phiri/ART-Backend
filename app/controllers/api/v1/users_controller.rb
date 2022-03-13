@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     before_action :authorized, except: [:set_admin, :login]
-    before_action :set_user, only: [:show, :update, :destroy]
+    before_action :set_user, only: [:show, :update, :change_password, :destroy]
     
     def index
         render json: {status: 'success', message: 'users loaded', data: User.where.not(role: 'Admin')}, status: :ok
@@ -32,6 +32,16 @@ class Api::V1::UsersController < ApplicationController
             render json: {status: 'success', message: 'User successfully deleted', data: @user}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to delete user'}
+        end
+    end
+
+    def change_password
+        @user.password = params[:password]
+        @user.password_confirmation = params[:password_confirmation]
+        if @user.save
+            render json: {status: 'success', message: 'User successfully updated', data: @user}, status: :ok
+        else
+            render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
         end
     end
 

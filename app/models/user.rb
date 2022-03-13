@@ -6,8 +6,6 @@ class User < ApplicationRecord
     validates :role, presence: true, inclusion: {in: VALID_ROLES}
     validates :email, presence: true, uniqueness: true, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i ,message: ' Entered is invalid'}
     validates :password, length: {in: 6..8}
-    validates :password, confirmation: true
-    validates :password_confirmation, presence: true
     scope :lab_assistants,->{where(role: 'Lab Assistant')}
     scope :hda_personnels,->{where(role: 'HDA Personnel')}
 end
