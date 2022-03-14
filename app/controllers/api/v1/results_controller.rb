@@ -24,6 +24,7 @@ class Api::V1::ResultsController < ApplicationController
             results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, temperature: lab_order.temperature, name: params[:name])
             if results.persisted?
                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
+               #TwilioTextMessenger.new(message,phone_number).call
             else
               render json: {status: 'error', message: 'Failed to add test results'}
             end
