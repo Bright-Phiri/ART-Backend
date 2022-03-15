@@ -6,10 +6,10 @@ class TwilioTextMessenger
       @phone_number = phone_number
     end
   
-    def call
-      client = Twilio::REST::Client.new('twilio_account_sid','twilio_account_auth_token')
+    def send
+      client = Twilio::REST::Client.new(Rails.application.credentials.sid,Rails.application.credentials.auth)
       client.messages.create({
-          from: '',
+          from: Rails.application.credentials.phone_number,
           to: phone_number,
           body: message
       })
