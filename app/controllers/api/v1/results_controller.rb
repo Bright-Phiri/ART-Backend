@@ -24,7 +24,7 @@ class Api::V1::ResultsController < ApplicationController
             results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, temperature: lab_order.temperature, name: params[:name])
             if results.persisted?
                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
-               message1 = "Dear #{patient.first_name} #{patient.last_name}, you're being informed that you're test results are ready right at the center where the blood samples were taken. therefore, you're requested to come over to the center so that you know your results and get some counseling according to the results."
+               message1 = "Dear #{patient.first_name} #{patient.last_name}, you're being informed that your test results are ready right at the center where the blood samples were taken. therefore, you're requested to come over to the center so that you know your results and get some counseling according to the results."
                message2= "Okondedwa #{patient.first_name} #{patient.last_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
                phone_number = patient.phone
                TwilioTextMessenger.new(message1,phone_number).send
