@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           resources :results, except: :index
         end
       end
+      resources :results_archieve, only: :index
       get 'lab_orders', action: :index, controller: 'lab_orders'
       get 'results', action: :index, controller: 'results'
       get 'statistics', action: :stati, controller: 'reports'
