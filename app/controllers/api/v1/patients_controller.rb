@@ -40,6 +40,6 @@ class Api::V1::PatientsController < ApplicationController
     end
 
     def patient_params
-        params.permit(:id, :first_name, :last_name, :gender, :dob, :village, :district, :phone, :location)
+        params.permit(:first_name, :last_name, :gender, :dob, :village, :district, :phone, :location)
     end
 end

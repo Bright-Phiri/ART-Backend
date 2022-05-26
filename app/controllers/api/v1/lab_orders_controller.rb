@@ -17,7 +17,7 @@ class Api::V1::LabOrdersController < ApplicationController
 
     def create
         patient = Patient.find(params[:patient_id])
-        lab_order = patient.lab_orders.create(qrcode: params[:qrcode], blood_type: params[:blood_type], temperature: params[:temperature])
+        lab_order = patient.lab_orders.create(lab_order_params)
         if lab_order.persisted?
            render json: {status: 'success', message: 'lab order successfully added to patient', data: lab_order}, status: :created
         else
@@ -48,6 +48,6 @@ class Api::V1::LabOrdersController < ApplicationController
     end
 
     def lab_order_params
-        params.permit(:id, :patient_id, :qrcode, :blood_type, :temperature)
+        params.permit(:patient_id, :qrcode, :blood_type, :tissue_name, :requested_by, :taken_by)
     end
 end
