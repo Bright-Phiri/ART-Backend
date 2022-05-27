@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_25_115123) do
+ActiveRecord::Schema.define(version: 2022_05_27_071810) do
 
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
@@ -51,11 +51,12 @@ ActiveRecord::Schema.define(version: 2022_05_25_115123) do
   create_table "results", force: :cascade do |t|
     t.string "patient_name"
     t.string "blood_type"
-    t.float "temperature"
-    t.string "name"
     t.integer "lab_order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "hiv_res"
+    t.text "tisuue_res"
+    t.string "conducted_by"
     t.index ["lab_order_id"], name: "index_results_on_lab_order_id"
   end
 

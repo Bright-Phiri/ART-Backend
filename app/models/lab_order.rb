@@ -7,4 +7,8 @@ class LabOrder < ApplicationRecord
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: VALID_BLOOD_TYPES}
   default_scope {order(:created_at).reverse_order}
+
+  def created_at
+    attributes['created_at'].strftime("%Y-%m-%d")
+  end
 end
