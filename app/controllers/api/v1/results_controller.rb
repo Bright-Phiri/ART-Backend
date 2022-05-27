@@ -17,7 +17,7 @@ class Api::V1::ResultsController < ApplicationController
 
     def create
         lab_order = LabOrder.find(params[:lab_order_id])
-        result = lab_order.result
+        result = lab_order.result_archieve
         if result.nil?
             patient = Patient.find(lab_order.patient_id)
             patient_full_name = "#{patient.first_name} #{patient.last_name}"
