@@ -21,9 +21,9 @@ class Api::V1::ResultsController < ApplicationController
         if result.nil?
             patient = Patient.find(lab_order.patient_id)
             patient_full_name = "#{patient.first_name} #{patient.last_name}"
-            results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tissue_name], conducted_by: params[:conducted_by])
+            results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tisuue_res], conducted_by: params[:conducted_by])
             if results.persisted?
-               results_archieve = lab_order.create_result_archieve(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tissue_name], conducted_by: params[:conducted_by])
+               results_archieve = lab_order.create_result_archieve(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tisuue_res], conducted_by: params[:conducted_by])
                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
                results.destroy
                message1 = "Dear #{patient.first_name} #{patient.last_name}, you're being informed that your test results are ready at the center where the blood samples were taken. therefore, you're requested to come over so that you know your results and get counseling according to the results."
