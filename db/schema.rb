@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_27_090448) do
+ActiveRecord::Schema.define(version: 2022_05_30_084416) do
 
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_05_27_090448) do
     t.string "tissue_name"
     t.string "requested_by"
     t.string "taken_by"
+    t.integer "status", default: 0
     t.index ["patient_id"], name: "index_lab_orders_on_patient_id"
   end
 
@@ -35,19 +36,6 @@ ActiveRecord::Schema.define(version: 2022_05_27_090448) do
     t.string "location"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "result_archieves", force: :cascade do |t|
-    t.string "patient_name"
-    t.string "blood_type"
-    t.string "name"
-    t.integer "lab_order_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "hiv_res"
-    t.text "tisuue_res"
-    t.string "conducted_by"
-    t.index ["lab_order_id"], name: "index_result_archieves_on_lab_order_id"
   end
 
   create_table "results", force: :cascade do |t|
@@ -73,6 +61,5 @@ ActiveRecord::Schema.define(version: 2022_05_27_090448) do
   end
 
   add_foreign_key "lab_orders", "patients"
-  add_foreign_key "result_archieves", "lab_orders"
   add_foreign_key "results", "lab_orders"
 end

@@ -11,9 +11,9 @@ Rails.application.routes.draw do
           resources :results, except: :index
         end
       end
-      resources :results_archieve, only: :index
-      delete 'delete_all', action: :destroy_all, controller: 'results_archieve'
+      delete 'delete_all', action: :destroy_all, controller: 'lab_orders_archieve'
       get 'lab_orders', action: :index, controller: 'lab_orders'
+      get 'lab_orders_archieve', action: :archived, controller: 'lab_orders'
       get 'results', action: :index, controller: 'results'
       get 'statistics', action: :stati, controller: 'reports'
       get 'lab_orders_statistics', action: :lab_orders_statistics, controller: 'reports'
