@@ -91,6 +91,8 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.10.0)
@@ -180,6 +182,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug
+  fast_jsonapi
   jwt
   pg
   puma (~> 5.6)

@@ -3,17 +3,18 @@ class Api::V1::UsersController < ApplicationController
     before_action :set_user, only: [:show, :update, :change_password, :destroy]
     
     def index
-        render json: {status: 'success', message: 'users loaded', data: User.where.not(role: 'Admin')}, status: :ok
+        users = User.where.not(role: 'Admin')
+        render json: {status: 'success', message: 'users loaded', data: UserSerializer.new(users)}, status: :ok
     end
 
     def show
-        render json: {status: 'success', message: 'user loaded', data: @user}, status: :ok
+        render json: {status: 'success', message: 'user loaded', data: UserSerializer.new(@user)}, status: :ok
     end
 
     def create
         user = User.new(user_params)
         if user.save
-           render json: {status: 'success', message: 'User successfully added', data: user}, status: :created
+           render json: {status: 'success', message: 'User successfully added', data: UserSerializer.new(user)}, status: :created
         else
             render json: {status: 'error', message: 'Failed to add user', errors: user.errors.full_messages}
         end
@@ -21,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
 
     def update
         if @user.update(user_params)
-            render json: {status: 'success', message: 'User successfully updated', data: @user}, status: :ok
+            render json: {status: 'success', message: 'User successfully updated', data: UserSerializer.new(@user)}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
         end
@@ -29,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
 
     def destroy
         if @user.destroy
-            render json: {status: 'success', message: 'User successfully deleted', data: @user}, status: :ok
+            render json: {status: 'success', message: 'User successfully deleted', data: UserSerializer.new(@user)}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to delete user'}
         end
@@ -39,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
         @user.password = params[:password]
         @user.password_confirmation = params[:password_confirmation]
         if @user.save
-            render json: {status: 'success', message: 'User successfully updated', data: @user}, status: :ok
+            render json: {status: 'success', message: 'User successfully updated', data: UserSerializer.new(@user)}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
         end
@@ -52,7 +53,7 @@ class Api::V1::UsersController < ApplicationController
             user = User.new(user_params)
             user.role = "Admin"
             if user.save
-                render json: {status: 'success', message: 'Account successfully created', data: user}, status: :created
+                render json: {status: 'success', message: 'Account successfully created', data: UserSerializer.new(user)}, status: :created
             else
                 render json: {status: 'error', message: 'Failed to create account', errors: user.errors.full_messages}
             end
