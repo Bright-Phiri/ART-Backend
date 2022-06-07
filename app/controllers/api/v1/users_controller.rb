@@ -3,8 +3,7 @@ class Api::V1::UsersController < ApplicationController
     before_action :set_user, only: [:show, :update, :change_password, :destroy]
     
     def index
-        users = User.where.not(role: 'Admin')
-        render json: {status: 'success', message: 'users loaded', data: UserSerializer.new(users)}, status: :ok
+        render json: {status: 'success', message: 'users loaded', data: UserSerializer.new(User.where.not(role: 'Admin'))}, status: :ok
     end
 
     def show
