@@ -15,6 +15,12 @@ class Api::V1::ResultsController < ApplicationController
         end
     end
 
+    def verify_lab_order 
+        lab_order = LabOrder.find_by_qrcode!(params[:qrcode])
+        lab_order.update(verified: true)
+        render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok
+    end
+
     def create
         lab_order = LabOrder.find(params[:lab_order_id])
         result = lab_order.result

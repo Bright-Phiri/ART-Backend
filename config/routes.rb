@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       delete 'delete_all', action: :destroy_all, controller: 'lab_orders_archieve'
       get 'lab_orders', action: :index, controller: 'lab_orders'
       get 'lab_orders_archieve', action: :archived, controller: 'lab_orders'
+      get 'verify_lab_order/:qrcode', action: :verify_lab_order, controller: 'results'
       get 'results', action: :index, controller: 'results'
       get 'statistics', action: :stati, controller: 'reports'
       get 'lab_orders_statistics', action: :lab_orders_statistics, controller: 'reports'

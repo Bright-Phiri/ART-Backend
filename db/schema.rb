@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_30_084416) do
+ActiveRecord::Schema.define(version: 2022_06_10_154206) do
 
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2022_05_30_084416) do
     t.string "requested_by"
     t.string "taken_by"
     t.integer "status", default: 0
+    t.boolean "verified", default: false
     t.index ["patient_id"], name: "index_lab_orders_on_patient_id"
   end
 
