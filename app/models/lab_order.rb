@@ -6,7 +6,7 @@ class LabOrder < ApplicationRecord
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: VALID_BLOOD_TYPES}
   default_scope {order(:created_at).reverse_order}
-  enum status: [:active, :archived]
+  enum status: [:active, :archived], _suffix: true, _default: :active
 
   def created_at
     attributes['created_at'].strftime("%Y-%m-%d")

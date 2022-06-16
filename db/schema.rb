@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2022_06_10_154206) do
     t.string "tissue_name"
     t.string "requested_by"
     t.string "taken_by"
-    t.integer "status", default: 0
+    t.integer "status"
     t.boolean "verified", default: false
     t.index ["patient_id"], name: "index_lab_orders_on_patient_id"
   end
