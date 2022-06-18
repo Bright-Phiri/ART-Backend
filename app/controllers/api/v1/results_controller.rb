@@ -23,29 +23,25 @@ class Api::V1::ResultsController < ApplicationController
     end
 
     def create
-        lab_order = LabOrder.find(params[:lab_order_id])
-        if lab_order.verified?
-           result = lab_order.result
-           if result.nil?
-              patient = Patient.find(lab_order.patient_id)
-              patient_full_name = "#{patient.first_name} #{patient.last_name}"
-              results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tisuue_res], conducted_by: params[:conducted_by])
-              if results.persisted?
-                 lab_order.archived_status!
-                 render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
-                 message1 = "Dear #{patient.first_name} #{patient.last_name}, you're being informed that your test results are ready at the center where the blood samples were taken. therefore, you're requested to come over so that you know your results and get counseling according to the results."
-                 message2= "Okondedwa #{patient.first_name} #{patient.last_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
-                 phone_number = patient.phone
-                 TwilioTextMessenger.new(message1,phone_number).send
-                 TwilioTextMessenger.new(message2,phone_number).send 
-              else
-                render json: {status: 'error', message: 'Failed to add test results'}
-              end
-            else
-              render json: {status: 'error', message: 'Lab Order Results already added'}
-            end
-        else
-            render json: {status: 'error', message: 'Lab Order Not verified'}
+        ActiveRecord::Base.transaction do
+          lab_order = LabOrder.find(params[:lab_order_id])
+          if lab_order.verified?
+             result = lab_order.result
+             raise StandardError.new("Lab Order Results already added") unless result.nil?
+             patient = Patient.find(lab_order.patient_id)
+             patient_full_name = "#{patient.first_name} #{patient.last_name}"
+             results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tisuue_res], conducted_by: params[:conducted_by])
+             if results.persisted?
+                lab_order.archived_status!
+                message1 = "Dear #{patient_full_name}, you're being informed that your test results are ready at the center where the blood samples were taken. therefore, you're requested to come over so that you know your results and get counseling according to the results."
+                message2 = "Okondedwa #{patient_full_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
+                TwilioTextMessenger.new(message1, patient.phone).send
+                TwilioTextMessenger.new(message2, patient.phone).send 
+                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
+             end
+           else
+             render json: {status: 'error', message: 'Lab Order Not verified'}
+           end
         end
     end
 

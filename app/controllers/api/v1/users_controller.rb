@@ -61,20 +61,17 @@ class Api::V1::UsersController < ApplicationController
 
     # LOGGING IN
     def login
-        begin
-           if User.exists?
-             @user = User.find_by_username!(params[:username]) #Getting dynamic finder to raise exception
-             if @user && @user.authenticate(params[:password])
-               token = encode_token({user_id: @user.id})
-               render json: {status: 'success', message: 'Access granted', user: @user, token: token}, status: :ok
-             else
-               render json: {status: 'error', message: "Invalid username or password"}
-             end
-          else
+        if User.exists?
+           @user = User.find_by_username(params[:username])
+           raise StandardError.new("Username not found") unless @user.present?
+           if @user && @user.authenticate(params[:password])
+              token = encode_token({user_id: @user.id})
+              render json: {status: 'success', message: 'Access granted', user: @user, token: token}, status: :ok
+           else
+              render json: {status: 'error', message: "Invalid username or password"}
+           end
+        else
            render json: {status: 'error', message: "No user account found"}
-          end
-       rescue ActiveRecord::RecordNotFound
-           render json: {status: 'error', message: "Username not found"}
         end
     end
 
