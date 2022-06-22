@@ -35,10 +35,10 @@ class Api::V1::ResultsController < ApplicationController
                 lab_order.archived_status!
                 message1 = "Dear #{patient_full_name}, you're being informed that your test results are ready at the center where the blood samples were taken. therefore, you're requested to come over so that you know your results and get counseling according to the results."
                 message2 = "Okondedwa #{patient_full_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
-                TwilioTextMessenger.new(message1, patient.phone).send
-                TwilioTextMessenger.new(message2, patient.phone).send 
+                TwilioTextMessenger.new(message1, patient.phone).call
+                TwilioTextMessenger.new(message2, patient.phone).call 
                 render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
-                ActionCable.server.broadcast 'notification_channel', {res: 'results', results: Result.count} 
+                NotificationRelayJob.perform_later({res: 'results', results: Result.count}.as_json)  
              end
            else
              render json: {status: 'error', message: 'Lab Order Not verified'}

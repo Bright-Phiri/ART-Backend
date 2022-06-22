@@ -23,8 +23,8 @@ class Api::V1::LabOrdersController < ApplicationController
         patient = Patient.find(params[:patient_id])
         lab_order = patient.lab_orders.create(lab_order_params)
         if lab_order.persisted?
-           render json: {status: 'success', message: 'lab order successfully added to patient', data: lab_order}, status: :created
-           ActionCable.server.broadcast 'notification_channel', {res: 'lab_orders_count',lab_orders: LabOrder.statistics, lab_orders_count: LabOrder.active_status.count} 
+           render json: {status: 'success', message: 'lab order successfully added to patient', data: lab_order}, status: :created 
+           NotificationRelayJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
         else
            render json: {status: 'error', message: 'Failed to add lab order', errors: lab_order.errors.full_messages}
         end

@@ -6,7 +6,7 @@ class TwilioTextMessenger
       @phone_number = phone_number
     end
   
-    def send
+    def call
       client = Twilio::REST::Client.new(Rails.application.credentials.sid,Rails.application.credentials.auth)
       client.messages.create({
           from: Rails.application.credentials.phone_number,

@@ -9,6 +9,7 @@ class NotificationChannel < ApplicationCable::Channel
   end
 
   def self.statistics
-    ActionCable.server.broadcast('notification_channel', {res: 'all',lab_orders: LabOrder.statistics, users: User.where.not(role: 'Admin').count, patients: Patient.count,lab_orders_count: LabOrder.active_status.count, results: Result.count})
+    data = {res: 'all', lab_orders: LabOrder.statistics, users: User.where.not(role: 'Admin').count, patients: Patient.count,lab_orders_count: LabOrder.active_status.count, results: Result.count}.as_json
+    NotificationRelayJob.perform_later(data)
   end
 end
