@@ -12,7 +12,8 @@ class Api::V1::PatientsController < ApplicationController
     def create
         patient = Patient.new(patient_params)
         if patient.save
-            render json: {status: 'success', message: 'patient successfully added', data: patient}, status: :created
+           render json: {status: 'success', message: 'patient successfully added', data: patient}, status: :created
+           ActionCable.server.broadcast 'notification_channel', {res: 'patients', patients: Patient.count}
         else
             render json: {status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages}
         end

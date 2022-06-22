@@ -38,6 +38,7 @@ class Api::V1::ResultsController < ApplicationController
                 TwilioTextMessenger.new(message1, patient.phone).send
                 TwilioTextMessenger.new(message2, patient.phone).send 
                 render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
+                ActionCable.server.broadcast 'notification_channel', {res: 'results', results: Result.count} 
              end
            else
              render json: {status: 'error', message: 'Lab Order Not verified'}

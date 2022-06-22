@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  mount ActionCable.server => '/cable'
   namespace :api do
     namespace :v1 do
       resources :users
@@ -16,8 +17,6 @@ Rails.application.routes.draw do
       get 'lab_orders_archieve', action: :archived, controller: 'lab_orders'
       get 'verify_lab_order/:qrcode', action: :verify_lab_order, controller: 'results'
       get 'results', action: :index, controller: 'results'
-      get 'statistics', action: :stati, controller: 'reports'
-      get 'lab_orders_statistics', action: :lab_orders_statistics, controller: 'reports'
     end
   end
 end
