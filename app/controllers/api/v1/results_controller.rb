@@ -37,8 +37,7 @@ class Api::V1::ResultsController < ApplicationController
                 message2 = "Okondedwa #{patient_full_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
                 TwilioTextMessenger.new(message1, patient.phone).call
                 TwilioTextMessenger.new(message2, patient.phone).call 
-                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}
-                NotificationRelayJob.perform_later({res: 'results', results: Result.count}.as_json)  
+                render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}  
              end
            else
              render json: {status: 'error', message: 'Lab Order Not verified'}

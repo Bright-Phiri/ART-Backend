@@ -9,7 +9,15 @@ class LabOrder < ApplicationRecord
   scope :statistics,->{select(:id, :created_at, 'COUNT(id)').group(:id)}
   enum status: [:active, :archived], _suffix: true, _default: :active
 
+  after_commit :broadcast_data, on: [:create, :destroy]
+
   def created_at
     attributes['created_at'].strftime("%Y-%m-%d")
+  end
+
+  private
+
+  def broadcast_data
+     DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
   end
 end

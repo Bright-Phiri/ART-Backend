@@ -1,7 +1,7 @@
-class NotificationChannel < ApplicationCable::Channel
+class DashboardChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "notification_channel"
-    NotificationChannel.statistics
+    stream_from "dashboard_channel"
+    DashboardChannel.statistics
   end
 
   def unsubscribed
@@ -10,6 +10,6 @@ class NotificationChannel < ApplicationCable::Channel
 
   def self.statistics
     data = {res: 'all', lab_orders: LabOrder.statistics, users: User.where.not(role: 'Admin').count, patients: Patient.count,lab_orders_count: LabOrder.active_status.count, results: Result.count}.as_json
-    NotificationRelayJob.perform_later(data)
+    DashboardSocketDataJob.perform_later(data)
   end
 end
