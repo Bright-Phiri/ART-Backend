@@ -9,7 +9,7 @@ class LabOrder < ApplicationRecord
   scope :statistics,->{select(:id, :created_at, 'COUNT(id)').group(:id)}
   enum status: [:active, :archived], _suffix: true, _default: :active
 
-  after_commit :broadcast_data, on: [:create, :destroy]
+  after_commit :broadcast_data, on: [:create, :update, :destroy]
 
   def created_at
     attributes['created_at'].strftime("%Y-%m-%d")
