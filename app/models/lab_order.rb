@@ -7,7 +7,7 @@ class LabOrder < ApplicationRecord
   validates :blood_type, inclusion: {in: VALID_BLOOD_TYPES}
   default_scope {order(:created_at).reverse_order}
   scope :statistics,->{select(:id, :created_at, 'COUNT(id)').group(:id)}
-  enum status: [:active, :archived], _suffix: true, _default: :active
+  enum :status, [:active, :archived], suffix: true, default: :active
 
   after_commit :broadcast_data, on: [:create, :update, :destroy]
 
