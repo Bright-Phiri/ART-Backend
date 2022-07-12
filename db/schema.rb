@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_10_154206) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_06_10_154206) do
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
     t.string "blood_type"
     t.integer "patient_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "tissue_name"
     t.string "requested_by"
     t.string "taken_by"
@@ -35,16 +34,16 @@ ActiveRecord::Schema.define(version: 2022_06_10_154206) do
     t.string "village"
     t.string "phone"
     t.string "location"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "results", force: :cascade do |t|
     t.string "patient_name"
     t.string "blood_type"
     t.integer "lab_order_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "hiv_res"
     t.text "tisuue_res"
     t.string "conducted_by"
@@ -57,8 +56,8 @@ ActiveRecord::Schema.define(version: 2022_06_10_154206) do
     t.string "phone"
     t.string "role"
     t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "lab_orders", "patients"
