@@ -7,9 +7,8 @@ class CreatePatients < ActiveRecord::Migration[6.1]
       t.date :dob
       t.string :district
       t.string :village
-      t.string :phone
+      t.string :phone, index: {unique: true}
       t.string :location
-
       t.timestamps
     end
   end

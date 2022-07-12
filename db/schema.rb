@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_10_154206) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["phone"], name: "index_patients_on_phone", unique: true
   end
 
   create_table "results", force: :cascade do |t|
@@ -58,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_10_154206) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "lab_orders", "patients"
