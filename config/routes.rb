@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       post 'createaccount', action: :set_admin, controller: 'users'
       put 'changepassword/:id', action: :change_password, controller: 'users'
       post 'login', action: :login, controller: 'users'
+      post 'password/forgot', action: :forgot, controller: 'users'
+      post 'password/reset', action: :reset, controller: 'users'
       resources :patients do 
         resources :lab_orders, except: :index do 
           resources :results, except: :index

@@ -8,4 +8,24 @@ class User < ApplicationRecord
     validates :password, length: {in: 6..8}
     scope :lab_assistants,->{where(role: 'Lab Assistant')}
     scope :hda_personnels,->{where(role: 'HDA Personnel')}
+
+    def generate_password_token
+        self.reset_password_token = generate_token
+        self.reset_password_sent_at = Time.now.utc
+    end
+       
+    def password_token_valid?
+        (self.reset_password_sent_at + 2.hours) > Time.now.utc
+    end
+       
+    def reset_password(password)
+        self.reset_password_token = nil
+        self.password = password
+    end
+       
+    private
+       
+    def generate_token
+        SecureRandom.hex(10)
+    end
 end

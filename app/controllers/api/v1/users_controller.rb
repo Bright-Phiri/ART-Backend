@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :authorized, except: [:set_admin, :login]
+    before_action :authorized, except: [:set_admin, :login, :forgot, :reset]
     before_action :set_user, only: [:show, :update, :change_password, :destroy]
     
     def index
@@ -45,6 +45,35 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def forgot
+        return render json: {status: 'error', message: 'Email not present'} if params[:email].blank? # check if email is present
+        user = User.find_by_email(params[:email]) # if present find user by email
+        if user
+           user.transaction do
+              user.generate_password_token #generate pass token
+              UserMailer.with(user: user).password_reset.deliver_now
+              render json: {status: 'success', message: 'Your password email has been sent'}, status: :ok
+           end
+        else
+          render json: {status: 'error', message: 'Email Address not found'}
+        end
+    end
+
+    def reset
+        token = params[:token].to_s
+        return render json: {status: 'error', message: 'Email not present'} if token.blank?
+        user = User.find_by(reset_password_token: token)
+        if user.present? && user.password_token_valid?
+          if user.reset_password(params[:password])
+            render json: {status: 'ok'}, status: :ok
+          else
+            render json: {status: 'error', message: user.errors.full_messages}
+          end
+        else
+          render json: {status: 'error', message: 'Token not valid or expired. Try generating a new token.'}
+        end
+      end
+
     def set_admin
         if User.exists?
             render json: {status: 'error', message: 'You dont have required privilege to complete this action'}
@@ -75,17 +104,17 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
- def auto_login
-    render json: @user
- end
+    def auto_login
+        render json: @user
+    end
 
     private
     
     def set_user
-        @user = User.find(params[:id])
+       @user = User.find(params[:id])
     end
 
-    def user_params
-        params.permit(:username, :email, :phone, :role, :password, :password_confirmation)
-    end
+   def user_params
+       params.permit(:username, :email, :phone, :role, :password, :password_confirmation, :reset_password_token)
+   end
 end
