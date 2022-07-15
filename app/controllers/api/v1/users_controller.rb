@@ -20,6 +20,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def update
+        @user.avatar.purge
         if @user.update(user_params)
             render json: {status: 'success', message: 'User successfully updated', data: UserSerializer.new(@user)}, status: :ok
         else
@@ -28,6 +29,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def destroy
+        @user.avatar.purge
         if @user.destroy
             render json: {status: 'success', message: 'User successfully deleted', data: UserSerializer.new(@user)}, status: :ok
         else
@@ -95,7 +97,7 @@ class Api::V1::UsersController < ApplicationController
            raise StandardError.new("Username not found") unless @user.present?
            if @user && @user.authenticate(params[:password])
               token = encode_token({user_id: @user.id})
-              render json: {status: 'success', message: 'Access granted', user: @user, token: token}, status: :ok
+              render json: {status: 'success', message: 'Access granted', user: @user, token: token, avatar: url_for(@user.avatar)}, status: :ok
            else
               render json: {status: 'error', message: "Invalid username or password"}
            end
@@ -115,6 +117,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
    def user_params
-       params.permit(:username, :email, :phone, :role, :password, :password_confirmation, :reset_password_token)
+       params.permit(:username, :email, :phone, :role, :password, :password_confirmation, :reset_password_token, :avatar)
    end
 end

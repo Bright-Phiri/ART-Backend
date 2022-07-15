@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-    default from: email_address_with_name('mail', 'ART Team')
+    default from: email_address_with_name('bphiri1998@gmail.com', 'ART Team')
 
     def password_reset 
         @user = params[:user]
