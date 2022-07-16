@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
+    validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
     validates :phone, presence: true, uniqueness: true, numericality: {only_integer: true}, format: {with: /\A(\+?(265|0){1}(1|88[0-9]|99[0-9]|98[0-9]|90[0-9]){1}[0-9]{6})\z/, message: ' number is invalid'}
     VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel']
