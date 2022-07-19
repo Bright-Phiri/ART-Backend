@@ -11,18 +11,21 @@ class User < ApplicationRecord
     scope :lab_assistants,->{where(role: 'Lab Assistant')}
     scope :hda_personnels,->{where(role: 'HDA Personnel')}
 
-    def generate_password_token
+    def generate_password_token!
         self.reset_password_token = generate_token
         self.reset_password_sent_at = Time.now.utc
+        save!(validate: false)
     end
        
     def password_token_valid?
         (self.reset_password_sent_at + 2.hours) > Time.now.utc
     end
        
-    def reset_password(password)
+    def reset_password!(password)
         self.reset_password_token = nil
         self.password = password
+        self.password_confirmation = password
+        save!(validate: false)
     end
        
     private

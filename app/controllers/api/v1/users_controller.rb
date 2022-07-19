@@ -52,7 +52,7 @@ class Api::V1::UsersController < ApplicationController
         user = User.find_by_email(params[:email]) # if present find user by email
         if user
            user.transaction do
-              user.generate_password_token #generate pass token
+              user.generate_password_token! #generate pass token
               UserMailer.with(user: user).password_reset.deliver_now
               render json: {status: 'success', message: 'Your password email has been sent'}, status: :ok
            end
@@ -66,8 +66,8 @@ class Api::V1::UsersController < ApplicationController
         return render json: {status: 'error', message: 'Email not present'} if token.blank?
         user = User.find_by(reset_password_token: token)
         if user.present? && user.password_token_valid?
-          if user.reset_password(params[:password])
-            render json: {status: 'ok'}, status: :ok
+          if user.reset_password!(params[:password])
+            render json: {status: 'success', message: 'Password successfully changed'}, status: :ok
           else
             render json: {status: 'error', message: user.errors.full_messages}
           end
@@ -117,6 +117,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
    def user_params
-       params.permit(:username, :email, :phone, :role, :password, :password_confirmation, :reset_password_token, :avatar)
+       params.permit(:username, :email, :phone, :role, :password, :password_confirmation, :token, :avatar)
    end
 end
