@@ -69,7 +69,7 @@ class Api::V1::UsersController < ApplicationController
           if user.reset_password!(params[:password])
             render json: {status: 'success', message: 'Password successfully changed'}, status: :ok
           else
-            render json: {status: 'error', message: user.errors.full_messages}
+            render json: {status: 'error', message: 'Failed to update password', errors: user.errors.full_messages}
           end
         else
           render json: {status: 'error', message: 'Token not valid or expired. Try generating a new token.'}
