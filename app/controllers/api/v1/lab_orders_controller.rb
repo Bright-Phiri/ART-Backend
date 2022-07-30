@@ -11,8 +11,7 @@ class Api::V1::LabOrdersController < ApplicationController
     def show
         patient = Patient.find(params[:patient_id])
         lab_orders = patient.lab_orders
-        lab_orders_count = lab_orders.size
-        if lab_orders_count == 0
+        if lab_orders.size == 0
             render json: {status: 'error', message: 'Lab orders not recorded for this patient'}
         else
             render json: {status: 'success', message: 'Lab orders loaded', data: lab_orders}, status: :ok

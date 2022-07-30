@@ -17,8 +17,7 @@ class Api::V1::ResultsController < ApplicationController
 
     def verify_lab_order 
         lab_order = LabOrder.find_by_qrcode!(params[:qrcode])
-        lab_order.verified = true
-        lab_order.save
+        lab_order.update(verified: true)
         render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok
     end
 
@@ -46,11 +45,11 @@ class Api::V1::ResultsController < ApplicationController
     end
 
     def update
-       if @results.update(results_params)
+        if @results.update(results_params)
           render json: {status: 'success', message: 'Test results successfully updated', data: @results}, status: :ok
-       else
+        else
           render json: {status: 'error', message: 'Failed to update test results', errors: @user.errors.full_messages}
-       end
+        end
     end
 
     def destroy
