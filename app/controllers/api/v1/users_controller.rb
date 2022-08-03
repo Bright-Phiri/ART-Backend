@@ -80,8 +80,7 @@ class Api::V1::UsersController < ApplicationController
         if User.exists?
             render json: {status: 'error', message: 'You dont have required privilege to complete this action'}
         else
-            user = User.new(user_params)
-            user.role = "Admin"
+            user = User.new(user_params.merge(role: 'Admin'))
             if user.save
                 render json: {status: 'success', message: 'Account successfully created', data: UserSerializer.new(user)}, status: :created
             else
