@@ -18,6 +18,6 @@ class LabOrder < ApplicationRecord
   private
 
   def broadcast_data
-     DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
+     DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
   end
 end
