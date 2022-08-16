@@ -34,8 +34,8 @@ class Api::V1::ResultsController < ApplicationController
                 lab_order.archived_status!
                 message1 = "Dear #{patient_full_name}, you're being informed that your test results are ready at the center where the blood samples were taken. therefore, you're requested to come over so that you know your results and get counseling according to the results."
                 message2 = "Okondedwa #{patient_full_name}, tafuna tikudziwiseni kuti zotsatila za kuyezedwa kwa magazi anu zafika tsopano ku center komwe munayezedwa magaziko. Muli kupemphedwa kuti mubwere kuti muzamve zotsatilazi komaso kuti mulandire uphungu malingana ndi zotsatilazo."
-                TwilioSms.new(patient.phone, message1).call
-                TwilioSms.new(patient.phone, message2).call
+                TwilioSms(patient.phone, message1).call
+                TwilioSms(patient.phone, message2).call
                 render json: {status: 'success', message: 'Test results successfully added to lab order', data: results}  
              end
            else
