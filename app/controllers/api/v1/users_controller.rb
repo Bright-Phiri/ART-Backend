@@ -93,7 +93,7 @@ class Api::V1::UsersController < ApplicationController
     def login
         if User.exists?
            @user = User.find_by_username(params[:username])
-           raise StandardError.new("Username not found") unless @user.present?
+           raise InvalidUsername, "Username not found" unless @user.present?
            if @user && @user.authenticate(params[:password])
               token = encode_token({user_id: @user.id})
               render json: {status: 'success', message: 'Access granted', user: @user, token: token, avatar: url_for(@user.avatar)}, status: :ok

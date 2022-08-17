@@ -26,7 +26,7 @@ class Api::V1::ResultsController < ApplicationController
           lab_order = LabOrder.find(params[:lab_order_id])
           if lab_order.verified?
              result = lab_order.result
-             raise StandardError.new("Lab Order Results already added") unless result.nil?
+             raise LabOrdeError, "Lab Order Results already added" unless result.nil?
              patient = Patient.find(lab_order.patient_id)
              patient_full_name = "#{patient.first_name} #{patient.last_name}"
              results = lab_order.create_result(patient_name: patient_full_name, blood_type: lab_order.blood_type, hiv_res: params[:hiv_res], tisuue_res: params[:tisuue_res], conducted_by: params[:conducted_by])
