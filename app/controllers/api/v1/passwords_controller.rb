@@ -6,9 +6,9 @@ class Api::V1::PasswordsController < ApplicationController
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
       if @user.save
-          render json: {status: 'success', message: 'User successfully updated', data: UserSerializer.new(@user)}, status: :ok
+          render json: {status: 'success', message: 'Password successfully updated'}, status: :ok
       else
-          render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
+          render json: {status: 'error', message: 'Failed to update password', errors: @user.errors.full_messages}
       end
    end
 

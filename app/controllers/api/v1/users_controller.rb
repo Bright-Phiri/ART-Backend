@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     before_action :authorized, except: [:set_admin]
-    before_action :set_user, only: [:show, :update, :change_password, :destroy]
+    before_action :set_user, only: [:show, :update, :destroy]
     
     def index
         render json: {status: 'success', message: 'users loaded', data: UserSerializer.new(User.excluding(User.find_by role: 'Admin'))}, status: :ok
