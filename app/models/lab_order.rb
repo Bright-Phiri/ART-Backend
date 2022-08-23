@@ -7,6 +7,8 @@ class LabOrder < ApplicationRecord
   validates :blood_type, inclusion: {in: VALID_BLOOD_TYPES}
   default_scope {order(:created_at).reverse_order}
   scope :statistics,->{select(:id, :created_at, 'COUNT(id)').group(:id)}
+  scope :unverified_lab_orders,-> {where(verified: false)}
+  scope :verified_lab_orders,-> {unverified_lab_orders.invert_where}
   enum :status, [:active, :archived], suffix: true, default: :active
 
   after_commit :broadcast_data, on: [:create, :update, :destroy]
@@ -19,5 +21,6 @@ class LabOrder < ApplicationRecord
 
   def broadcast_data
      DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
+     NotificationRelayJob.perform_later({unverified_lab_orders_count: LabOrder.unverified_lab_orders.count}.as_json)
   end
 end
