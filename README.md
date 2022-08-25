@@ -1,30 +1,24 @@
-# ART API
+# README
 
-## Getting Started
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-### Requirements
+Things you may want to cover:
 
-* Ruby 3.1.2+
-* Rails 7.0.0+
+* Ruby version
 
-### Run locally 
+* System dependencies
 
-* Clone the repo
-```
-git clone https://github.com/Bright-Phiri/ART-Backend.git
-```
+* Configuration
 
-### Setting up rails & other dependencies
+* Database creation
 
-```
-cd ART-Backend
-bundle install
-```
-Get everything up and running
+* Database initialization
 
-### 3rd parties
+* How to run the test suite
 
-ART API wouldn't be possible without:
+* Services (job queues, cache servers, search engines, etc.)
 
-* Twilio
-* Cloudnary
+* Deployment instructions
+
+* ...
