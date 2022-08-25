@@ -1,11 +1,9 @@
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
-    include ActiveModel::Validations
-    validates_with PhoneValidator
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
-    validates :phone, presence: true, uniqueness: true, numericality: {only_integer: true}
+    validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
     VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel']
     validates :role, presence: true, inclusion: {in: VALID_ROLES}
     validates :email, presence: true, uniqueness: true, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i ,message: ' Entered is invalid'}
