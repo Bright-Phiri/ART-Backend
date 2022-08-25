@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
+    validates_with PhoneValidator
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
     validates :phone, presence: true, uniqueness: true, numericality: {only_integer: true}
