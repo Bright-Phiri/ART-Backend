@@ -4,7 +4,7 @@ class CreateLabOrders < ActiveRecord::Migration[6.1]
       t.string :qrcode
       t.string :blood_type
       t.float :temperature
-      t.belongs_to :patient, null: false, foreign_key: true
+      t.belongs_to :patient, null: false, index: true, foreign_key: true
 
       t.timestamps
     end

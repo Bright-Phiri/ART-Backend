@@ -76,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_120527) do
     t.string "hiv_res"
     t.text "tisuue_res"
     t.string "conducted_by"
-    t.index ["lab_order_id"], name: "index_results_on_lab_order_id"
+    t.index ["lab_order_id"], name: "index_results_on_lab_order_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
