@@ -15,8 +15,13 @@ ART API
    ```
    $ bundle install
    ```
+3. Run migrations:
 
-3. Run locally
+   ```
+   $ bin/rails db:migrate
+   ```
+   
+4. Running the API
 
    ```
    $ bin/rails server
