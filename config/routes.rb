@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get 'lab_orders_archieve', action: :archived, controller: 'lab_orders'
       get 'verify_lab_order/:qrcode', action: :verify_lab_order, controller: 'results'
       get 'results', action: :index, controller: 'results'
-      resources :blood_groups, except: :show
+      resources :blood_groups
     end
   end
 end
