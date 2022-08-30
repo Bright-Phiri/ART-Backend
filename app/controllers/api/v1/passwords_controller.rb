@@ -13,22 +13,17 @@ class Api::V1::PasswordsController < ApplicationController
    end
 
    def forgot
-        return render json: {status: 'error', message: 'Email not present'} if params[:email].blank? # check if email is present
-        user = User.find_by_email(params[:email]) # if present find user by email
-        if user
-           user.transaction do
-              user.generate_password_token! #generate password token
-              UserMailer.with(user: user).password_reset.deliver_now
-              render json: {status: 'success', message: 'A reset password link has been sent to your email'}, status: :ok
-           end
-        else
-          render json: {status: 'error', message: 'Email Address not found'}
-        end
+      user = User.find_by_email(params[:email]) 
+      raise StandardError, "Email address not found" unless user.present?
+      user.transaction do
+        user.generate_password_token!
+        UserMailer.with(user: user).password_reset.deliver_now
+        render json: {status: 'success', message: 'A reset password link has been sent to your email'}, status: :ok
+      end
    end
 
    def reset
         token = params[:token].to_s
-        return render json: {status: 'error', message: 'Email not present'} if token.blank?
         user = User.find_by(reset_password_token: token)
         if user.present? && user.password_token_valid?
           if user.reset_password!(params[:password])
