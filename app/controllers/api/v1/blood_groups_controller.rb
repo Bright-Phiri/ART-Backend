@@ -1,7 +1,11 @@
 class Api::V1::BloodGroupsController < ApplicationController
-    before_action :set_blood_group, only: [:update, :destroy]
+    before_action :set_blood_group, only: [:show, :update, :destroy]
     def index
         render json: {status: 'success', message: 'Blood groups loaded', data: BloodGroup.all}, status: :ok
+    end
+
+    def show
+        render json: {status: 'success', message: 'Blood group loaded', data: @blood_group}, status: :ok
     end
 
     def create
