@@ -31,4 +31,7 @@ The following are required to run the API:
    ```
    $ bin/rails server
    ```
+ ## Contributors 
+ - [Bright](https://www.github.com/Bright-Phiri) - creator and maintainer
+
 
