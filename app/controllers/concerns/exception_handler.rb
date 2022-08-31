@@ -12,6 +12,10 @@ module ExceptionHandler
             render json: { status: 'error', message: exception.message}
         end
 
+        rescue_from StandardError do |exception|
+            render json: { status: 'error', message: exception.message}
+        end
+
         rescue_from ExceptionHandler::LabOrdeError do |exception|
             render json: { status: 'error', message: exception.message}
         end 
