@@ -21,11 +21,11 @@ class User < ApplicationRecord
         (self.reset_password_sent_at + 2.hours) > Time.now.utc
     end
        
-    def reset_password!(password)
+    def reset_password!(password, password_confirmation)
         self.reset_password_token = nil
         self.password = password
-        self.password_confirmation = password
-        save!(validate: false)
+        self.password_confirmation = password_confirmation
+        save!
     end
        
     private

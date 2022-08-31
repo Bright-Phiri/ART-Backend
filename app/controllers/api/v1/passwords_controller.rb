@@ -26,7 +26,7 @@ class Api::V1::PasswordsController < ApplicationController
         token = params[:token].to_s
         user = User.find_by(reset_password_token: token)
         if user.present? && user.password_token_valid?
-          if user.reset_password!(params[:password])
+          if user.reset_password!(params[:password], params[:password_confirmation])
             render json: {status: 'success', message: 'Password successfully changed'}, status: :ok
           else
             render json: {status: 'error', message: 'Failed to update password', errors: user.errors.full_messages}
