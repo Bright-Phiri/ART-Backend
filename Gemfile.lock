@@ -81,6 +81,7 @@ GEM
       aws_cf_signer
       rest-client (>= 2.0.0)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     digest (3.1.0)
     domain_name (0.5.20190701)
@@ -178,6 +179,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (4.8.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -190,6 +192,10 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby2_keywords (0.0.5)
+    sidekiq (6.5.6)
+      connection_pool (>= 2.2.5)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
     sqlite3 (1.4.4)
     strscan (3.0.3)
     thor (1.2.1)
@@ -230,6 +236,8 @@ DEPENDENCIES
   puma (~> 5.6)
   rack-cors
   rails (~> 7.0.0)
+  redis (~> 4.0)
+  sidekiq
   sqlite3 (~> 1.4)
   twilio-ruby
   tzinfo-data
