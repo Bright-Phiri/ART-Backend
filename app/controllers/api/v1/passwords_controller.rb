@@ -17,7 +17,7 @@ class Api::V1::PasswordsController < ApplicationController
       raise StandardError, "Email address not found" unless user.present?
       user.transaction do
         user.generate_password_token!
-        UserMailer.with(user: user).password_reset.deliver_now
+        UserMailer.with(user: user).password_reset.deliver_later
         render json: {status: 'success', message: 'A reset password link has been sent to your email'}, status: :ok
       end
    end

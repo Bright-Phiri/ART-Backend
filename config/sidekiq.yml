@@ -1,5 +1,7 @@
+:max_retries: 3
 :concurrency: 4
 :queues:
   - default
   - mailers
   - notification_messages
+  - active_storage_purge

@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def update
-        @user.avatar.purge
+        @user.avatar.purge_later
         if @user.update(user_params)
             render json: {status: 'success', message: 'User successfully updated', data: @user, avatar: url_for(@user.avatar)}, status: :ok
         else
@@ -29,7 +29,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def destroy
-        @user.avatar.purge
+        @user.avatar.purge_later
         if @user.destroy
             render json: {status: 'success', message: 'User successfully deleted', data: UserSerializer.new(@user)}, status: :ok
         else
