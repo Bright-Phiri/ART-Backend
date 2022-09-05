@@ -22,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
     def update
         @user.avatar.purge_later
         if @user.update(user_params)
-            render json: {status: 'success', message: 'User successfully updated', data: @user, avatar: url_for(@user.avatar)}, status: :ok
+            render json: {status: 'success', message: 'User successfully updated', data: @user,avatar: url_for(@user.avatar)}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages}
         end
