@@ -8,9 +8,9 @@ class Patient < ApplicationRecord
     validates :phone, phone: true, uniqueness: true ,numericality: { only_integer: true}
     after_commit :broadcast_data, on: [:create, :destroy]
 
+    include OrderableByTimestamp
     scope :male_patients,->{where(gender: 'Male')}
     scope :female_patients,->{male_patients.invert_where}
-    include OrderableByTimestamp
 
     def full_name
         "#{first_name} #{last_name}"
