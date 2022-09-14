@@ -5,4 +5,5 @@ class UserSerializer
   attribute :avatar do |user|
     user.avatar.url
   end
+  
 end
