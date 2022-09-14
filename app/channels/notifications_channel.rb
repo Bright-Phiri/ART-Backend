@@ -7,7 +7,7 @@ class NotificationsChannel < ApplicationCable::Channel
     stop_all_streams
   end
 
-  after_subscribe do
+  on_subscribe do
     data = {unverified_lab_orders_count: LabOrder.unverified_lab_orders.count}.as_json
     NotificationRelayJob.perform_later(data)
   end
