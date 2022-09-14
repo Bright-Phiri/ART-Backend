@@ -5,5 +5,4 @@ class UserMailer < ApplicationMailer
         @user = params[:user]
         mail(to: email_address_with_name(@user.email, @user.username), subject: 'Reset your account password')
     end
-
 end
