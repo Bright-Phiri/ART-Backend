@@ -11,5 +11,4 @@ class NotificationsChannel < ApplicationCable::Channel
     data = {unverified_lab_orders_count: LabOrder.unverified_lab_orders.count}.as_json
     NotificationRelayJob.perform_later(data)
   end
-  
 end
