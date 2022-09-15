@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       end
       delete 'delete_all', action: :destroy_all, controller: 'lab_orders_archieve'
       get 'lab_orders', action: :index, controller: 'lab_orders'
-      get 'lab_orders_archieve', action: :archived, controller: 'lab_orders'
+      get 'lab_orders_archive', action: :archived, controller: 'lab_orders'
       get 'verify_lab_order/:qrcode', action: :verify_lab_order, controller: 'results'
       get 'results', action: :index, controller: 'results'
       resources :blood_groups
