@@ -5,7 +5,7 @@ class LabOrder < ApplicationRecord
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: Proc.new {BloodGroup.pluck(:name)}}
   default_scope {order(:created_at).reverse_order}
-  include OrderableByTimestamp
+  include Filterable
   scope :statistics,->{created_in(Date.today.year).select(:id, :created_at,'COUNT(id)').group(:id)}
   scope :unverified_lab_orders,-> {where(verified: false)}
   scope :verified_lab_orders,-> {unverified_lab_orders.invert_where}

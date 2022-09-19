@@ -103,6 +103,9 @@ GEM
       domain_name (~> 0.5)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     jwt (2.4.1)
     loofah (2.18.0)
       crass (~> 1.0.2)
@@ -114,6 +117,7 @@ GEM
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
+    mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.16.1)
     msgpack (1.5.3)
@@ -191,6 +195,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     sidekiq (6.5.6)
       connection_pool (>= 2.2.5)
@@ -211,6 +217,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
+    unf_ext (0.0.8.2-x64-mingw-ucrt)
     uri (0.11.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -230,6 +237,7 @@ DEPENDENCIES
   cloudinary
   fast_jsonapi
   ffi
+  image_processing (~> 1.2)
   jwt
   net-http
   pg

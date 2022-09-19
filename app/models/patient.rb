@@ -10,7 +10,7 @@ class Patient < ApplicationRecord
 
     scope :male_patients,->{where(gender: 'Male')}
     scope :female_patients,->{male_patients.invert_where}
-    include OrderableByTimestamp
+    include Filterable
 
     def full_name
         "#{first_name} #{last_name}"
