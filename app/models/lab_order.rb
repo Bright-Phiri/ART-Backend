@@ -3,7 +3,7 @@ class LabOrder < ApplicationRecord
   has_one :result,->{readonly}, dependent: :destroy
   validates :qrcode, :blood_type, :tissue_name, :requested_by, :taken_by, presence: true
   validates :qrcode, uniqueness: true
-  validates :blood_type, inclusion: {in: BloodGroup.all.map(&:name)}
+  validates :blood_type, inclusion: {in: Proc.new {BloodGroup.pluck(:name)}}
   default_scope {order(:created_at).reverse_order}
   include Filterable
   scope :statistics,->{created_in(Date.today.year).select(:id, :created_at,'COUNT(id)').group(:id)}
