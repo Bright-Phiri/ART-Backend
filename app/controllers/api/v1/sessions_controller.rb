@@ -4,7 +4,7 @@ class Api::V1::SessionsController < ApplicationController
     # LOGGING IN
     def login
         if User.exists?
-           @user = User.find_by_username(params[:username])
+           @user = User.find_by_username(params.fetch(:username).strip)
            raise InvalidUsername, "Username not found" unless @user.present?
            if @user && @user.authenticate(params[:password])
               token = encode_token({user_id: @user.id})
