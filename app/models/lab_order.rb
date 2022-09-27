@@ -1,6 +1,6 @@
 class LabOrder < ApplicationRecord
   belongs_to :patient
-  has_one :result,->{readonly}, dependent: :destroy
+  has_one :result, dependent: :destroy
   validates :qrcode, :blood_type, :tissue_name, :requested_by, :taken_by, presence: true
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: Proc.new {BloodGroup.pluck(:name)}}

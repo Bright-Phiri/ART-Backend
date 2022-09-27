@@ -1,5 +1,5 @@
 class Patient < ApplicationRecord
-    has_many :lab_orders,->{readonly}, dependent: :destroy
+    has_many :lab_orders, dependent: :destroy
     validates_associated :lab_orders
     validates :first_name, :last_name, :gender, :dob, :district, :village, :phone, :location, presence: true
     validate :date_of_birth_cannot_be_in_the_future
