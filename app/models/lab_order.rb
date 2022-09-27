@@ -4,6 +4,7 @@ class LabOrder < ApplicationRecord
   validates :qrcode, :blood_type, :tissue_name, :requested_by, :taken_by, presence: true
   validates :qrcode, uniqueness: true
   validates :blood_type, inclusion: {in: Proc.new {BloodGroup.pluck(:name)}}
+  validates_with LabOrderValidator
   default_scope {order(:created_at).reverse_order}
   include Filterable
   scope :statistics,->{created_in(Date.current.year).select(:id, :created_at,'COUNT(id)').group(:id)}
