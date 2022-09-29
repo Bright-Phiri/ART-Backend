@@ -4,7 +4,7 @@ class User < ApplicationRecord
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
     validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
-    VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel']
+    VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel'].freeze
     validates :role, presence: true, inclusion: {in: VALID_ROLES}
     validates :email, presence: true, uniqueness: true, email: true
     validates :password, length: {in: 6..8}
