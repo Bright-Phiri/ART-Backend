@@ -2,7 +2,7 @@ class Api::V1::PasswordsController < ApplicationController
    before_action :authorized, except: [:forgot, :reset, :change_password]
    before_action :set_user, only: :change_password
 
-   def change_password
+   def change
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
       if @user.save

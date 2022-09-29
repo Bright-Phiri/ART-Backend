@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       post 'createaccount', action: :set_admin, controller: 'users'
-      put 'changepassword/:id', action: :change_password, controller: 'passwords'
+      put 'changepassword/:id', action: :change, controller: 'passwords'
       post 'login', action: :login, controller: 'sessions'
       post 'password/forgot', action: :forgot, controller: 'passwords'
       post 'password/reset', action: :reset, controller: 'passwords'
