@@ -17,8 +17,9 @@ class Api::V1::ResultsController < ApplicationController
 
     def verify
         lab_order = LabOrder.find_by_qrcode!(params[:qrcode])
-        lab_order.toggle!(:verified) unless lab_order.verified?
-        render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok if lab_order.verified?
+        raise LabOrdeError, "Lab Order already verified" if lab_order.verified?
+        lab_order.toggle!(:verified)
+        render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok
     end
 
     def create
