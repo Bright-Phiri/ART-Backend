@@ -21,7 +21,7 @@ class Api::V1::ResultsController < ApplicationController
            lab_order.toggle!(:verified)
            render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok
         else 
-           render json:{status: 'error', message: lab_order.errors.where(:base).first.full_message}
+           render json:{status: 'error', message: lab_order.errors.where(:base).first.full_message}, status: :ok
         end
     end
 
