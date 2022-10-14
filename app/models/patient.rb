@@ -2,7 +2,7 @@ class Patient < ApplicationRecord
     has_many :lab_orders, inverse_of: :patient, dependent: :destroy
     validates :first_name, :last_name, :gender, :dob, :district, :village, :phone, :location, presence: true
     validate :date_of_birth_cannot_be_in_the_future
-    VALID_GENDERS = ['Male','Female']
+    VALID_GENDERS = ['Male','Female'].freeze
     validates :gender, inclusion: { in: VALID_GENDERS}
     validates :phone, phone: true, uniqueness: true ,numericality: { only_integer: true}
     after_commit :broadcast_data, on: [:create, :destroy]
