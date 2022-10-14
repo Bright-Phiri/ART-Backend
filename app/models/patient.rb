@@ -1,6 +1,5 @@
 class Patient < ApplicationRecord
-    has_many :lab_orders, dependent: :destroy
-    validates_associated :lab_orders
+    has_many :lab_orders, inverse_of: :patient, dependent: :destroy
     validates :first_name, :last_name, :gender, :dob, :district, :village, :phone, :location, presence: true
     validate :date_of_birth_cannot_be_in_the_future
     VALID_GENDERS = ['Male','Female']
@@ -14,6 +13,10 @@ class Patient < ApplicationRecord
 
     def full_name
         "#{first_name} #{last_name}"
+    end
+
+    def first_step?
+        current_step == steps.first
     end
 
     private
