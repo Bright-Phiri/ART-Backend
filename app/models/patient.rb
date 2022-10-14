@@ -15,10 +15,6 @@ class Patient < ApplicationRecord
         "#{first_name} #{last_name}"
     end
 
-    def first_step?
-        current_step == steps.first
-    end
-
     private
 
     def date_of_birth_cannot_be_in_the_future
