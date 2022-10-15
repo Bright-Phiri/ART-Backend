@@ -8,8 +8,8 @@ class User < ApplicationRecord
     validates :role, presence: true, inclusion: {in: VALID_ROLES}
     validates :email, presence: true, uniqueness: true, email: true
     validates :password, length: {in: 6..8}
-    scope :lab_assistants,->{where(role: 'Lab Assistant')}
-    scope :hda_personnels,->{where(role: 'HDA Personnel')}
+    scope :lab_assistants,->{where(role: VALID_ROLES.fetch(1))}
+    scope :hda_personnels,->{where(role: VALID_ROLES.last)}
 
     def generate_password_token!
         self.reset_password_token = generate_token
