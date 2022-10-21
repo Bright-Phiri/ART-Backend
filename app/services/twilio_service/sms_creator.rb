@@ -1,4 +1,5 @@
-class TwilioSms < ApplicationService
+module TwilioService
+  class SmsCreator < ApplicationService
     attr_reader :phone_number, :message
 
     def initialize(phone_number, message)
@@ -7,6 +8,11 @@ class TwilioSms < ApplicationService
     end
 
     def call
+      send_text_message
+    end
+
+    private
+    def send_text_message
       twilio_client = Twilio::REST::Client.new Rails.application.credentials.twilio_sid, Rails.application.credentials.twilio_token
       twilio_client.api.account.messages.create(
       from: Rails.application.credentials.twilio_phone_number,
@@ -15,3 +21,4 @@ class TwilioSms < ApplicationService
       )
     end
   end
+end
