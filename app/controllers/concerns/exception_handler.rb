@@ -1,7 +1,7 @@
 module ExceptionHandler 
     extend ActiveSupport::Concern
     class InvalidUsername < StandardError; end
-    class LabOrdeError < StandardError; end
+    class LabOrderError < StandardError; end
 
     included do
         rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -16,7 +16,7 @@ module ExceptionHandler
             render json: { status: 'error', message: exception.message}
         end
 
-        rescue_from ExceptionHandler::LabOrdeError do |exception|
+        rescue_from ExceptionHandler::LabOrderError do |exception|
             render json: { status: 'error', message: exception.message}
         end 
 

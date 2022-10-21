@@ -19,7 +19,7 @@ module ResultsService
             lab_order = LabOrder.find(lab_order_id)
             if lab_order.verified?
                result = lab_order.result
-               raise LabOrdeError, "Lab Order Results already added" unless result.nil?
+               raise ExceptionHandler::LabOrderError, "Lab Order Results already added" unless result.nil?
                patient = Patient.find(lab_order.patient_id)
                results = lab_order.create_result(patient_name: patient.full_name, blood_type: lab_order.blood_type, hiv_res: hiv_res, tisuue_res: tisuue_res, conducted_by: conducted_by)
                if results.persisted?
@@ -31,7 +31,7 @@ module ResultsService
                   test_results
                end
             else
-               render json: {status: 'error', message: 'Lab Order Not verified'}
+               raise ExceptionHandler::LabOrderError, "Lab Order Not verified"
             end
         end
     end
