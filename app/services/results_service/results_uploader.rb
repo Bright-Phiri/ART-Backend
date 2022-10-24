@@ -1,12 +1,12 @@
 class ResultsService::ResultsUploader < ApplicationService
     attr_reader :blood_type, :hiv_res, :tisuue_res, :conducted_by, :lab_order_id
 
-    def initialize(blood_type, hiv_res, tisuue_res, conducted_by, lab_order_id)
-      @blood_type = blood_type
-      @hiv_res = hiv_res
-      @tisuue_res = tisuue_res
-      @conducted_by = conducted_by
-      @lab_order_id = lab_order_id
+    def initialize(params)
+      @blood_type = params[:blood_type]
+      @hiv_res = params[:hiv_res]
+      @tisuue_res = params[:tisuue_res]
+      @conducted_by = params[:conducted_by]
+      @lab_order_id = params[:lab_order_id]
     end
 
     def call

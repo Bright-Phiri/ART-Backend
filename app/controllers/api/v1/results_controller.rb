@@ -26,7 +26,7 @@ class Api::V1::ResultsController < ApplicationController
     end
 
     def create
-        test_results = ResultsService::ResultsUploader.call(params[:blood_type], params[:hiv_res], params[:tisuue_res], params[:conducted_by], params[:lab_order_id])
+        test_results = ResultsService::ResultsUploader.call(params)
         if test_results.uploaded?
            render json: {status: 'success', message: 'Test results successfully added to lab order'}  
            NotificationMessageJob.perform_later(test_results.patient_phone, test_results.msg1)
