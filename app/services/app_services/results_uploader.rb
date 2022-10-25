@@ -1,4 +1,4 @@
-class AppServices::UploadResults < ApplicationService
+class AppServices::ResultsUploader < ApplicationService
     attr_reader :blood_type, :hiv_res, :tisuue_res, :conducted_by, :lab_order_id
 
     def initialize(params)
