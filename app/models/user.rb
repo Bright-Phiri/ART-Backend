@@ -1,12 +1,14 @@
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
-    validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
-    validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
-    validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
     VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel'].freeze
-    validates :role, presence: true, inclusion: {in: VALID_ROLES}
-    validates :email, presence: true, uniqueness: true, email: true
+    validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
+    validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
+    with_options presence: true do
+        validates :username, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
+        validates :role, inclusion: {in: VALID_ROLES}
+        validates :email, uniqueness: true, email: true
+    end
     validates :password, length: {in: 6..8}
     scope :lab_assistants,->{where(role: VALID_ROLES.fetch(1))}
     scope :hda_personnels,->{where(role: VALID_ROLES.last)}
