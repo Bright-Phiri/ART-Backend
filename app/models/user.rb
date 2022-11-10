@@ -5,9 +5,9 @@ class User < ApplicationRecord
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
     with_options presence: true do
-        validates :username, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
-        validates :role, inclusion: {in: VALID_ROLES}
-        validates :email, uniqueness: true, email: true
+       validates :username, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
+       validates :role, inclusion: {in: VALID_ROLES}
+       validates :email, uniqueness: true, email: true
     end
     validates :password, length: {in: 6..8}
     scope :lab_assistants,->{where(role: VALID_ROLES.fetch(1))}
