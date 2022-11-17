@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
-    before_action :authorized, except: [:login]
+    skip_before_action :require_login, only: [:login]
 
     # LOGGING IN
     def login

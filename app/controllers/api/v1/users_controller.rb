@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :authorized, except: [:set_admin]
+    skip_before_action :require_login, only: [:set_admin]
     before_action :set_user, only: [:show, :update, :destroy]
     
     def index
