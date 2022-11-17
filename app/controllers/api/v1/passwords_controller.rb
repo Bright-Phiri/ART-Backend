@@ -1,5 +1,5 @@
 class Api::V1::PasswordsController < ApplicationController
-   skip_before_action  :require_login, only: [:forgot, :reset, :change_password]
+   skip_before_action :require_login, only: [:forgot, :reset, :change_password]
    before_action :set_user, only: :change_password
 
    def change
