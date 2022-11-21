@@ -55,10 +55,11 @@ class Api::V1::ResultsController < ApplicationController
     private
 
     def set_results 
-        @results = Result.find(params[:id])
+        lab_order = LabOrder.find(params[:lab_order_id])
+        @results = lab_order.result.find(params[:id])
     end
 
     def results_params
-        params.permit(:lab_order_id, :hiv_res, :tisuue_res, :conducted_by,:qrcode, :blood_type, :tissue_name, :requested_by, :taken_by)
+        params.permit(:hiv_res, :tisuue_res, :conducted_by,:qrcode, :blood_type, :tissue_name, :requested_by, :taken_by)
     end
 end

@@ -11,7 +11,7 @@ class Api::V1::LabOrdersController < ApplicationController
     def show
         patient = Patient.find(params[:patient_id])
         lab_orders = patient.lab_orders
-        if lab_orders.size == 0
+        if lab_orders.empty?
             render json: {status: 'error', message: 'Lab orders not recorded for this patient'}
         else
             render json: {status: 'success', message: 'Lab orders loaded', data: lab_orders}, status: :ok
@@ -38,7 +38,7 @@ class Api::V1::LabOrdersController < ApplicationController
 
     def destroy
         if @lab_order.destroy
-            render json: {status: 'success', message: 'Lab order successfully deleted', data: @lab_order}, status: :ok
+            render json: {status: 'success', message: 'Lab order successfully deleted', data: lab_order}, status: :ok
         else
             render json: {status: 'error', message: 'Failed to delete lab order'}
         end
@@ -47,10 +47,11 @@ class Api::V1::LabOrdersController < ApplicationController
     private
 
     def set_lab_order
-        @lab_order = LabOrder.find(params[:id])
+        patient = Patient.find(params[:patient_id])
+        @lab_order = patient.lab_orders.find(params[:id])
     end
 
     def lab_order_params
-        params.permit(:patient_id, :qrcode, :blood_type, :tissue_name, :requested_by, :taken_by)
+        params.permit(:qrcode, :blood_type, :tissue_name, :requested_by, :taken_by)
     end
 end
