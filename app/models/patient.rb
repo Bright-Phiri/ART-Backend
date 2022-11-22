@@ -6,7 +6,6 @@ class Patient < ApplicationRecord
     validates :gender, inclusion: { in: VALID_GENDERS}
     validates :phone, phone: true, uniqueness: true ,numericality: { only_integer: true}
     after_commit :broadcast_data, on: [:create, :destroy]
-
     scope :male_patients,->{where(gender: VALID_GENDERS.first)}
     scope :female_patients,->{male_patients.invert_where}
     include Filterable
