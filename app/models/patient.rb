@@ -16,7 +16,6 @@ class Patient < ApplicationRecord
     end
 
     private
-
     def date_of_birth_cannot_be_in_the_future
         if dob.present? && dob > Date.today
             errors.add :dob, message: " cannot be in the future"

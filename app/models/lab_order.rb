@@ -21,7 +21,6 @@ class LabOrder < ApplicationRecord
   end
 
   private
-
   def broadcast_data
      DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
      NotificationRelayJob.perform_later({unverified_lab_orders_count: LabOrder.unverified_lab_orders.count}.as_json)

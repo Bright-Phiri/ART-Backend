@@ -217,7 +217,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.8.2)
-    unf_ext (0.0.8.2-x64-mingw-ucrt)
     uri (0.11.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)

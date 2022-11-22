@@ -7,7 +7,6 @@ class Result < ApplicationRecord
   after_commit :broadcast_data, on: [:create, :destroy]
 
   private 
-
   def broadcast_data
       DashboardSocketDataJob.perform_later({res: 'results', results: Result.count}.as_json)
   end
