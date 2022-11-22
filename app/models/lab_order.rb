@@ -13,7 +13,6 @@ class LabOrder < ApplicationRecord
   scope :unverified_lab_orders,-> {where(verified: false)}
   scope :verified_lab_orders,-> {unverified_lab_orders.invert_where}
   enum :status, [:active, :archived], suffix: true, default: :active
-
   after_commit :broadcast_data, on: [:create, :update, :destroy]
 
   def created_at
