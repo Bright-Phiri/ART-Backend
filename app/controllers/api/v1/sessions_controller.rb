@@ -1,7 +1,6 @@
 class Api::V1::SessionsController < ApplicationController
     skip_before_action :require_login, only: [:login]
 
-    # LOGGING IN
     def login
         if User.exists?
            @user = User.find_by_username(params.fetch(:username).strip)
@@ -22,7 +21,6 @@ class Api::V1::SessionsController < ApplicationController
     end
 
     private
-
     def user_params
        params.permit(:username, :email, :password, :token)
     end

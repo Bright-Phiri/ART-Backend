@@ -1,5 +1,6 @@
 class Api::V1::BloodGroupsController < ApplicationController
     before_action :set_blood_group, only: [:show, :update, :destroy]
+
     def index
         render json: {status: 'success', message: 'Blood groups loaded', data: BloodGroup.all}, status: :ok
     end
@@ -34,7 +35,6 @@ class Api::V1::BloodGroupsController < ApplicationController
     end
 
     private
-
     def set_blood_group
         @blood_group = BloodGroup.find(params[:id])
     end

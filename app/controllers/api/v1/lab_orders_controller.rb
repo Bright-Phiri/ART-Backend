@@ -1,5 +1,6 @@
 class Api::V1::LabOrdersController < ApplicationController
     before_action :set_lab_order, only: [:update, :destroy]
+
     def index
         render json: {status: 'success', message: 'lab orders loaded', data: LabOrder.active_status}, status: :ok
     end
@@ -45,7 +46,6 @@ class Api::V1::LabOrdersController < ApplicationController
     end
 
     private
-
     def set_lab_order
         patient = Patient.find(params[:patient_id])
         @lab_order = patient.lab_orders.find(params[:id])
