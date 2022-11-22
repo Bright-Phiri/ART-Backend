@@ -3,6 +3,6 @@ class UserSerializer
   attributes :id, :username, :email, :phone, :role
 
   attribute :avatar do |user|
-     user.avatar.url
+    user.avatar.url
   end
 end
