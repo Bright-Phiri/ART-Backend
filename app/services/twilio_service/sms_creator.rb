@@ -13,10 +13,6 @@ class TwilioService::SmsCreator < ApplicationService
   private
   def send_text_message
     twilio_client = Twilio::REST::Client.new Rails.application.credentials.twilio_sid, Rails.application.credentials.twilio_token
-    twilio_client.api.account.messages.create(
-    from: Rails.application.credentials.twilio_phone_number,
-    to: phone_number, 
-    body: message
-    )
+    twilio_client.api.account.messages.create(from: Rails.application.credentials.twilio_phone_number, to: phone_number, body: message)
   end
 end
