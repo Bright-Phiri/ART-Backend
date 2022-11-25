@@ -13,14 +13,14 @@ class LabOrder < ApplicationRecord
   scope :unverified_lab_orders,-> {where(verified: false)}
   scope :verified_lab_orders,-> {unverified_lab_orders.invert_where}
   enum :status, [:active, :archived], suffix: true, default: :active
-  after_commit :broadcast_data, on: [:create, :update, :destroy]
+  after_commit :publish_to_dashboard, on: [:create, :update, :destroy]
 
   def created_at
     attributes['created_at'].strftime("%Y-%m-%d")
   end
 
   private
-  def broadcast_data
+  def publish_to_dashboard
      DashboardSocketDataJob.perform_later({res: 'lab_orders_count',lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count}.as_json)
      NotificationRelayJob.perform_later({unverified_lab_orders_count: LabOrder.unverified_lab_orders.count}.as_json)
   end

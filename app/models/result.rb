@@ -3,10 +3,10 @@ class Result < ApplicationRecord
   validates :patient_name, :blood_type, :hiv_res, :conducted_by, presence: true
   validates :tisuue_res, presence: true, allow_blank: true
   include Filterable
-  after_commit :broadcast_data, on: [:create, :destroy]
+  after_commit :publish_to_dashboard, on: [:create, :destroy]
 
   private 
-  def broadcast_data
+  def publish_to_dashboard 
       DashboardSocketDataJob.perform_later({res: 'results', results: Result.count}.as_json)
   end
 end

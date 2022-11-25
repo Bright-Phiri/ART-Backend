@@ -5,7 +5,7 @@ class Patient < ApplicationRecord
     VALID_GENDERS = ['Male','Female'].freeze
     validates :gender, inclusion: { in: VALID_GENDERS}
     validates :phone, phone: true, uniqueness: true ,numericality: { only_integer: true}
-    after_commit :broadcast_data, on: [:create, :destroy] 
+    after_commit :publish_to_dashboard, on: [:create, :destroy] 
     scope :male_patients,->{where(gender: VALID_GENDERS.first)}
     scope :female_patients,->{male_patients.invert_where}
     include Filterable
@@ -21,7 +21,7 @@ class Patient < ApplicationRecord
         end
     end
 
-    def broadcast_data
+    def publish_to_dashboard
         DashboardSocketDataJob.perform_later({res: 'patients', patients: Patient.count}.as_json)
     end
 end
