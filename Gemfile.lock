@@ -202,7 +202,6 @@ GEM
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sqlite3 (1.4.4)
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.3.0)
@@ -245,7 +244,6 @@ DEPENDENCIES
   rails (~> 7.0.0)
   redis (~> 4.0)
   sidekiq
-  sqlite3 (~> 1.4)
   twilio-ruby
   tzinfo-data
 
