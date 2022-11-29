@@ -19,8 +19,6 @@ gem 'fast_jsonapi'
 gem 'cloudinary'
 gem "ffi"
 gem 'active_storage_validations'
-
-# Use Active Storage variant
 gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
