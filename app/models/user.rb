@@ -3,15 +3,15 @@ class User < ApplicationRecord
     has_one_attached :avatar
     VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel'].freeze
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
-    validates :phone, phone: true, uniqueness: true, numericality: {only_integer: true}
+    validates :phone, phone: true, uniqueness: true, numericality: { only_integer: true }
     with_options presence: true do
        validates :username, uniqueness: true, format: { without: /\s/, message: ' must contain no spaces' }
-       validates :role, inclusion: {in: VALID_ROLES}
-       validates :email, uniqueness: {case_sensitive: false}, email: true
+       validates :role, inclusion: { in: VALID_ROLES }
+       validates :email, uniqueness: { case_sensitive: false }, email: true
     end
-    validates :password, length: {in: 6..8}
-    scope :lab_assistants,->{where(role: VALID_ROLES.fetch(1))}
-    scope :hda_personnels,->{where(role: VALID_ROLES.last)}
+    validates :password, length: { in: 6..8 }
+    scope :lab_assistants, ->{ where(role: VALID_ROLES.fetch(1)) }
+    scope :hda_personnels, ->{ where(role: VALID_ROLES.last) }
 
     def generate_password_token!
         self.reset_password_token = generate_token

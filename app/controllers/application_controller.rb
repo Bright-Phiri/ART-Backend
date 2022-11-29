@@ -35,6 +35,6 @@ class ApplicationController < ActionController::API
     end
     
     def require_login
-        render json: {status: 'login', message: 'Please log in' }, status: :unauthorized unless logged_in?
+        render json: { status: 'login', message: 'Please log in' }, status: :unauthorized unless logged_in?
     end
 end

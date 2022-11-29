@@ -2,16 +2,16 @@ class Api::V1::ResultsController < ApplicationController
     before_action :set_results, only: [:update, :destroy]
 
     def index
-        render json: {status: 'success', message: 'results loaded', data: Result.all}, status: :ok
+        render json: { status: 'success', message: 'results loaded', data: Result.all }, status: :ok
     end
 
     def show
         lab_order = LabOrder.find(params[:lab_order_id])
         results = lab_order.result
         if results.nil?
-            render json: {status: 'error', message: 'Lab test results not recorded'}
+            render json: { status: 'error', message: 'Lab test results not recorded' }
         else
-            render json: {status: 'success', message: 'results loaded', data: results}, status: :ok
+            render json: { status: 'success', message: 'results loaded', data: results }, status: :ok
         end
     end
 
@@ -19,36 +19,36 @@ class Api::V1::ResultsController < ApplicationController
         lab_order = LabOrder.find_by_qrcode!(params[:qrcode])
         if lab_order.valid?
            lab_order.toggle!(:verified)
-           render json: {status: 'success', message: 'Lab order verified', data: lab_order}, status: :ok
+           render json: { status: 'success', message: 'Lab order verified', data: lab_order }, status: :ok
         else 
-           render json: {status: 'error', message: lab_order.errors.where(:base).first.full_message}
+           render json: { status: 'error', message: lab_order.errors.where(:base).first.full_message }
         end
     end
 
     def create
         test_results = AppServices::ResultsUploader.call(results_params)
         if test_results.uploaded?
-           render json: {status: 'success', message: 'Test results successfully added to lab order'}  
+           render json: { status: 'success', message: 'Test results successfully added to lab order' }  
            NotificationMessageJob.perform_later(test_results.patient_phone, test_results.msg1)
            NotificationMessageJob.perform_later(test_results.patient_phone, test_results.msg2)
         else
-            render json: {status: 'error', message: 'Failed to add test results'}
+            render json: { status: 'error', message: 'Failed to add test results' }
         end
     end
 
     def update
         if @results.update(results_params)
-          render json: {status: 'success', message: 'Test results successfully updated', data: @results}, status: :ok
+          render json: { status: 'success', message: 'Test results successfully updated', data: @results }, status: :ok
         else
-          render json: {status: 'error', message: 'Failed to update test results', errors: @user.errors.full_messages}
+          render json: { status: 'error', message: 'Failed to update test results', errors: @user.errors.full_messages }
         end
     end
 
     def destroy
         if @results.destroy
-            render json: {status: 'success', message: 'Test results successfully deleted', data: @results}, status: :ok
+            render json: { status: 'success', message: 'Test results successfully deleted', data: @results }, status: :ok
         else
-            render json: {status: 'error', message: 'Failed to delete test results'}
+            render json: { status: 'error', message: 'Failed to delete test results' }
         end
     end
 

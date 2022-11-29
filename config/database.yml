@@ -9,7 +9,7 @@ default: &default
 development:
   <<: *default
   database: art_development
-
+  
 test:
   <<: *default
   database: art_test

@@ -52,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_080458) do
   create_table "lab_orders", force: :cascade do |t|
     t.string "qrcode"
     t.string "blood_type"
-    t.integer "patient_id", null: false
+    t.bigint "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tissue_name"
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_080458) do
   create_table "results", force: :cascade do |t|
     t.string "patient_name"
     t.string "blood_type"
-    t.integer "lab_order_id", null: false
+    t.bigint "lab_order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hiv_res"

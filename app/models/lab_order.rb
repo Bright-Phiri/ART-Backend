@@ -4,14 +4,14 @@ class LabOrder < ApplicationRecord
   validates :qrcode, :blood_type, :requested_by, :taken_by, presence: true
   validates :tissue_name, presence: true, allow_blank: true
   validates :qrcode, uniqueness: true
-  validates :blood_type, inclusion: {in: Proc.new {BloodGroup.pluck(:name).freeze}}
+  validates :blood_type, inclusion: { in: Proc.new {BloodGroup.pluck(:name).freeze} }
   include ActiveModel::Validations
   validates_with LabOrderValidator
-  default_scope {order(:created_at).reverse_order}
+  default_scope { order(:created_at).reverse_order }
   include Filterable
-  scope :statistics,->{created_in(Date.current.year).select(:id, :created_at,'COUNT(id)').group(:id)}
-  scope :unverified_lab_orders,-> {where(verified: false)}
-  scope :verified_lab_orders,-> {unverified_lab_orders.invert_where}
+  scope :statistics, ->{ created_in(Date.current.year).select(:id, :created_at,'COUNT(id)').group(:id) }
+  scope :unverified_lab_orders, ->{ where(verified: false) }
+  scope :verified_lab_orders, ->{ unverified_lab_orders.invert_where }
   enum :status, [:active, :archived], suffix: true, default: :active
   after_commit :publish_to_dashboard, on: [:create, :update, :destroy]
 
