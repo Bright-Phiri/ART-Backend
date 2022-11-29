@@ -5,3 +5,4 @@
   - mailers
   - notification_messages
   - active_storage_purge
+  - active_storage_analysis
