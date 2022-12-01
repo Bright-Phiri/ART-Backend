@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
-    has_one_attached :avatar
+    has_one_attached :avatar, dependent: :destroy
     VALID_ROLES = ['Admin', 'Lab Assistant', 'HDA Personnel'].freeze
     validates :avatar, attached: true, size: { less_than: 4.megabytes , message: ' is too large' }
     validates :phone, phone: true, uniqueness: true, numericality: { only_integer: true }
