@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
     before_action :require_login
+    include Response
     include ExceptionHandler
     
     def encode_token(payload)

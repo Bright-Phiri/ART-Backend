@@ -2,35 +2,35 @@ class Api::V1::BloodGroupsController < ApplicationController
     before_action :set_blood_group, only: [:show, :update, :destroy]
 
     def index
-        render json: { status: 'success', message: 'Blood groups loaded', data: BloodGroup.all }, status: :ok
+        json_response({ status: 'success', message: 'Blood groups loaded', data: BloodGroup.all })
     end
 
     def show
-        render json: { status: 'success', message: 'Blood group loaded', data: @blood_group }, status: :ok
+        json_response({ status: 'success', message: 'Blood group loaded', data: @blood_group })
     end
 
     def create
         blood_group = BloodGroup.new(blood_group_params)
         if blood_group.save 
-            render json: { status: 'success', message: 'Blood group successfully added', data: blood_group }, status: :created
+           json_response({ status: 'success', message: 'Blood group successfully added', data: blood_group }, :created)
         else
-            render json: { status: 'error', message: 'Failed to add blood group', errors: blood_group.errors.full_messages }
+           json_response({ status: 'error', message: 'Failed to add blood group', errors: blood_group.errors.full_messages })
         end
     end
 
     def update
-        if  @blood_group.update(blood_group_params)
-            render json: { status: 'success', message: 'Blood group successfully updated', data: @blood_group }, status: :ok
+        if @blood_group.update(blood_group_params)
+           json_response({ status: 'success', message: 'Blood group successfully updated', data: @blood_group })
         else
-            render json: { status: 'error', message: 'Failed to update blood group', errors: @blood_group.errors.full_messages }
+           json_response({ status: 'error', message: 'Failed to update blood group', errors: @blood_group.errors.full_messages })
         end
     end
 
     def destroy
         if @blood_group.destroy
-            render json: { status: 'success', message: 'Blood group successfully deleted', data: @blood_group }, status: :ok
+           json_response({ status: 'success', message: 'Blood group successfully deleted', data: @blood_group })
         else
-            render json: { status: 'error', message: 'Failed to deleted blood group' }
+           json_response({ status: 'error', message: 'Failed to deleted blood group' })
         end
     end
 

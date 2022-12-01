@@ -2,35 +2,35 @@ class Api::V1::PatientsController < ApplicationController
     before_action :set_patient, only: [:show, :update, :destroy]
 
     def index
-        render json: { status: 'success', message: 'patients loaded', data: Patient.all }, status: :ok
+        json_response({ status: 'success', message: 'patients loaded', data: Patient.all })
     end
 
     def show
-        render json: { status: 'success', message: 'patient loaded', data: @patient }, status: :ok
+        json_response({ status: 'success', message: 'patient loaded', data: @patient })
     end
 
     def create
         patient = Patient.new(patient_params)
         if patient.save
-           render json: { status: 'success', message: 'patient successfully added', data: patient }, status: :created
+           json_response({ status: 'success', message: 'patient successfully added', data: patient }, :created)
         else
-            render json: { status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages }
+           json_response({ status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages })
         end
     end
 
     def update
         if @patient.update(patient_params)
-            render json: { status: 'success', message: 'patient successfully updated', data: @patient }, status: :ok
+           json_response({ status: 'success', message: 'patient successfully updated', data: @patient })
         else
-            render json: { status: 'error', message: 'Failed to update patient', errors: @patient.errors.full_messages }
+           json_response({ status: 'error', message: 'Failed to update patient', errors: @patient.errors.full_messages })
         end
     end
 
     def destroy
         if @patient.destroy
-            render json: { status: 'success', message: 'patient successfully deleted', data: @patient }, status: :ok
+           json_response({ status: 'success', message: 'patient successfully deleted', data: @patient })
         else
-            render json: { status: 'error', message: 'Failed to delete patient' }
+           json_response({ status: 'error', message: 'Failed to delete patient' })
         end
     end
 

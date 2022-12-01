@@ -7,12 +7,12 @@ class Api::V1::SessionsController < ApplicationController
            raise InvalidUsername, "Username not found" unless @user.present?
            if @user && @user.authenticate(params[:password])
               token = encode_token({user_id: @user.id})
-              render json: { status: 'success', message: 'Access granted', user: @user, token: token, avatar: url_for(@user.avatar) }, status: :ok
+              json_response({ status: 'success', message: 'Access granted', user: @user, token: token, avatar: url_for(@user.avatar) })
            else
-              render json: { status: 'error', message: "Invalid username or password" }
+              json_response({ status: 'error', message: "Invalid username or password" })
            end
         else
-           render json: { status: 'error', message: "No user account found" }
+          json_response({ status: 'error', message: "No user account found" })
         end
     end
 

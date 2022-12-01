@@ -20,6 +20,7 @@ gem 'cloudinary'
 gem "ffi"
 gem 'active_storage_validations'
 gem 'image_processing', '~> 1.2'
+# gem 'rubocop', '~> 1.39', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

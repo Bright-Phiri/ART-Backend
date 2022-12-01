@@ -6,9 +6,9 @@ class Api::V1::PasswordsController < ApplicationController
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
       if @user.save
-          render json: { status: 'success', message: 'Password successfully updated' }, status: :ok
+         json_response({ status: 'success', message: 'Password successfully updated' })
       else
-          render json: { status: 'error', message: 'Failed to update password', errors: @user.errors.full_messages }
+         json_response({ status: 'error', message: 'Failed to update password', errors: @user.errors.full_messages })
       end
    end
 
@@ -18,7 +18,7 @@ class Api::V1::PasswordsController < ApplicationController
       user.transaction do
         user.generate_password_token!
         UserMailer.with(user: user).password_reset.deliver_later
-        render json: { status: 'success', message: 'A reset password link has been sent to your email' }, status: :ok
+        json_response({ status: 'success', message: 'A reset password link has been sent to your email' })
       end
    end
 
@@ -27,12 +27,12 @@ class Api::V1::PasswordsController < ApplicationController
         user = User.find_by(reset_password_token: token)
         if user.present? && user.password_token_valid?
           if user.reset_password!(params[:password], params[:password_confirmation])
-            render json: { status: 'success', message: 'Password successfully changed' }, status: :ok
+             json_response({ status: 'success', message: 'Password successfully changed' })
           else
-            render json: { status: 'error', message: 'Failed to update password', errors: user.errors.full_messages }
+             json_response({ status: 'error', message: 'Failed to update password', errors: user.errors.full_messages })
           end
         else
-          render json: { status: 'error', message: 'Token not valid or expired. Try generating a new token.' }
+          json_response({ status: 'error', message: 'Token not valid or expired. Try generating a new token.' })
         end
    end
 
