@@ -22,6 +22,6 @@ class Patient < ApplicationRecord
     end
 
     def publish_to_dashboard
-        DashboardSocketDataJob.perform_later({res: 'patients', patients: Patient.count}.as_json)
+        DashboardSocketDataJob.perform_later({ res: 'patients', patients: Patient.count })
     end
 end
