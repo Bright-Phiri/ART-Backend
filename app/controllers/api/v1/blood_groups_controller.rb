@@ -12,7 +12,7 @@ class Api::V1::BloodGroupsController < ApplicationController
     def create
         blood_group = BloodGroup.new(blood_group_params)
         if blood_group.save 
-           json_response({ status: 'success', message: 'Blood group successfully added', data: blood_group }, :created)
+           json_response({ status: 'success', message: 'Blood group successfully added', data: blood_group })
         else
            json_response({ status: 'error', message: 'Failed to add blood group', errors: blood_group.errors.full_messages })
         end

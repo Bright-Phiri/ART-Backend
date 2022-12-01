@@ -23,7 +23,7 @@ class Api::V1::LabOrdersController < ApplicationController
         patient = Patient.find(params[:patient_id])
         lab_order = patient.lab_orders.create(lab_order_params)
         if lab_order.persisted?
-           json_response({ status: 'success', message: 'lab order successfully added to patient', data: lab_order }, :created)
+           json_response({ status: 'success', message: 'lab order successfully added to patient', data: lab_order })
         else
            json_response({ status: 'error', message: 'Failed to add lab order', errors: lab_order.errors.full_messages })
         end

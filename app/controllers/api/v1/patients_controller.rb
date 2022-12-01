@@ -12,7 +12,7 @@ class Api::V1::PatientsController < ApplicationController
     def create
         patient = Patient.new(patient_params)
         if patient.save
-           json_response({ status: 'success', message: 'patient successfully added', data: patient }, :created)
+           json_response({ status: 'success', message: 'patient successfully added', data: patient })
         else
            json_response({ status: 'error', message: 'Failed to add patient', errors: patient.errors.full_messages })
         end
