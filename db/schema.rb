@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_080458) do
     t.integer "status"
     t.boolean "verified", default: false
     t.index ["patient_id"], name: "index_lab_orders_on_patient_id"
+    t.index ["qrcode"], name: "index_lab_orders_on_qrcode", unique: true
   end
 
   create_table "patients", force: :cascade do |t|
@@ -100,6 +101,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_080458) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["phone"], name: "index_users_on_phone", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

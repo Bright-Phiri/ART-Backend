@@ -1,33 +1,30 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
+gem 'active_storage_validations'
+# Use Active Model has_secure_password
+gem 'bcrypt', '~> 3.1.7'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.4.4', require: false
+gem 'cloudinary'
+gem 'fast_jsonapi'
+gem 'net-http'
 gem 'rails', '~> 7.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 5.6'
-gem "net-http"
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-gem 'bcrypt', '~> 3.1.7'
-gem 'sidekiq'
-gem 'fast_jsonapi'
-gem 'cloudinary'
-gem "ffi"
-gem 'active_storage_validations'
+gem 'ffi'
 gem 'image_processing', '~> 1.2'
-# gem 'rubocop', '~> 1.39', require: false
-
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.4', require: false
-
+gem 'jwt'
+gem 'pg'
+gem 'redis', '~> 4.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
-gem 'jwt'
+gem 'sidekiq'
+# gem 'rubocop', '~> 1.39', require: false
 gem 'twilio-ruby'
 
 group :development, :test do
@@ -36,11 +33,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'pg'
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :production do
-  gem 'pg'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

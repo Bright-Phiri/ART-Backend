@@ -1,0 +1,38 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - db/schema.rb
+    - db/migrate/*.rb
+Style/StringLiterals:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*
+    - config/routes.rb
+Documentation:
+  Enabled: false
+Layout/EndOfLine:
+   Enabled: False
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'
+Metrics/AbcSize:
+   Max: 100
+Layout/LineLength:
+  Max: 1000
+Metrics/MethodLength:
+  Max: 1000
+ClassAndModuleChildren:
+  Enabled: False
+Style/WordArray:
+  Enabled: False
+Style/SymbolArray:
+  Enabled: False
+
+
+
+
+
+
+
