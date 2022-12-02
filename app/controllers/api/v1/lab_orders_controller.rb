@@ -3,11 +3,11 @@
 class Api::V1::LabOrdersController < ApplicationController
   before_action :set_lab_order, only: [:update, :destroy]
   def index
-    json_response({ status: 'success', message: 'lab orders loaded', data: LabOrder.all })
+    json_response({ status: 'success', message: 'lab orders loaded', data: LabOrder.active_status })
   end
 
   def archived
-    json_response({ status: 'success', message: 'lab orders loaded', data: LabOrder.verified_lab_orders })
+    json_response({ status: 'success', message: 'lab orders loaded', data: LabOrder.archived_status })
   end
 
   def show
