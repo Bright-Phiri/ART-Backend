@@ -15,7 +15,7 @@ class LabOrder < ApplicationRecord
   validates :blood_type, inclusion: { in: Proc.new { BloodGroup.pluck(:name).freeze } }
   include ActiveModel::Validations
   validates_with LabOrderValidator
-  after_commit :publish_to_dashboard, on: %i[create update destroy]
+  after_commit :publish_to_dashboard, on: [:create, :update, :destroy]
 
   def created_at
     attributes['created_at'].strftime('%Y-%m-%d')
@@ -24,7 +24,7 @@ class LabOrder < ApplicationRecord
   private
 
   def publish_to_dashboard
-    DashboardSocketDataJob.perform_later({ res: 'lab_orders_count',lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count} )
-    NotificationRelayJob.perform_later({ unverified_lab_orders_count: LabOrder.unverified_lab_orders.count })
+    DashboardSocketDataJob.perform_later({ res: 'lab_orders_count', lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count }.as_json)
+    NotificationRelayJob.perform_later({ unverified_lab_orders_count: LabOrder.unverified_lab_orders.count }.as_json)
   end
 end
