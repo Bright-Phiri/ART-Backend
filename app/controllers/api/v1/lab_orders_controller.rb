@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::LabOrdersController < ApplicationController
-  before_action :set_lab_order, only: %i[update destroy]
+  before_action :set_lab_order, only: [:update, :destroy]
   def index
     json_response({ status: 'success', message: 'lab orders loaded', data: LabOrder.verified_lab_orders })
   end

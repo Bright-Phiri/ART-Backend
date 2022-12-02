@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::BloodGroupsController < ApplicationController
-  before_action :set_blood_group, only: %i[show update destroy]
+  before_action :set_blood_group, only: [:show, :update, :destroy]
   def index
     json_response({ status: 'success', message: 'Blood groups loaded', data: BloodGroup.all })
   end

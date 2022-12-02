@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Filterable
-  xtend ActiveSupport::Concern
+  extend ActiveSupport::Concern
   included do
     scope :filter_by_earliest_created, -> { order(created_at: :asc) }
     scope :filter_by_recently_created, -> { order(:created_at).reverse_order }

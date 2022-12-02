@@ -2,7 +2,7 @@
 
 class Api::V1::UsersController < ApplicationController
   skip_before_action :require_login, only: :set_admin
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_user, only: [:show, :update, :destroy]
   def index
     users = User.excluding(User.find_by(role: 'Admin'))
     json_response({ status: 'success', message: 'users loaded', data: UserSerializer.new(users).serializable_hash })
