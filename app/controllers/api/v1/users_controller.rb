@@ -24,9 +24,9 @@ class Api::V1::UsersController < ApplicationController
   def update
     @user.avatar.purge_later unless @user.invalid?
     if @user.update(user_params)
-      json_response({ message: 'User successfully updated', data: @user, avatar: url_for(@user.avatar) })
+      json_response({ status: 'success', message: 'User successfully updated', data: @user, avatar: url_for(@user.avatar) })
     else
-      json_response({ message: 'Failed to update user', errors: @user.errors.full_messages })
+      json_response({ status: 'error', message: 'Failed to update user', errors: @user.errors.full_messages })
     end
   end
 
