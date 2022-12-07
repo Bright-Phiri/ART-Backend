@@ -24,7 +24,7 @@ class LabOrder < ApplicationRecord
   private
 
   def publish_to_dashboard
-    DashboardSocketDataJob.perform_later({ res: 'lab_orders_count', lab_orders: LabOrder.unscoped.statistics, lab_orders_count: LabOrder.active_status.count }.as_json)
+    DashboardSocketDataJob.perform_later('lab_orders_count')
     NotificationRelayJob.perform_later
   end
 end

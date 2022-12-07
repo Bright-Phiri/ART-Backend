@@ -10,6 +10,6 @@ class Result < ApplicationRecord
   private
 
   def publish_to_dashboard
-    DashboardSocketDataJob.perform_later({ res: 'results', results: Result.count }.as_json)
+    DashboardSocketDataJob.perform_later('results')
   end
 end
