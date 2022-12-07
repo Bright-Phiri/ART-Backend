@@ -10,7 +10,6 @@ class NotificationsChannel < ApplicationCable::Channel
   end
 
   on_subscribe do
-    data = { unverified_lab_orders_count: LabOrder.unverified_lab_orders.count }.as_json
-    NotificationRelayJob.perform_later(data)
+    NotificationRelayJob.perform_later
   end
 end
