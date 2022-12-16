@@ -9,12 +9,12 @@ class Api::V1::SessionsController < ApplicationController
 
       if @user&.authenticate(params[:password])
         token = encode_token({ user_id: @user.id })
-        json_response({ status: 'success', message: 'Access granted', user: @user, token:, avatar: url_for(@user.avatar) })
+        json_response({ message: 'Access granted', user: @user, token:, avatar: url_for(@user.avatar) })
       else
-        json_response({ status: 'error', message: 'Invalid username or password' })
+        json_response({ message: 'Invalid username or password' }, :bad_request)
       end
     else
-      json_response({ status: 'error', message: 'No user account found' })
+      json_response({ message: 'No user account found' }, :not_found)
     end
   end
 
