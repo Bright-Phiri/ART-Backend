@@ -32,7 +32,7 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     if @user.destroy
-      json_response({ status: 'success', message: 'User successfully deleted', data: UserSerializer.new(@user).serializable_hash })
+      json_response({ status: 'success', message: 'User successfully deleted' })
     else
       json_response({ status: 'error', message: 'Failed to delete user' }, :bad_request)
     end

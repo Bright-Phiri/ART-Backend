@@ -29,7 +29,7 @@ class Api::V1::PatientsController < ApplicationController
 
   def destroy
     if @patient.destroy
-      json_response({ message: 'patient successfully deleted', data: @patient })
+      json_response({ message: 'patient successfully deleted' })
     else
       json_response({ message: 'Failed to delete patient' }, :bad_request)
     end

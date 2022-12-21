@@ -40,7 +40,7 @@ class Api::V1::LabOrdersController < ApplicationController
 
   def destroy
     if @lab_order.destroy
-      json_response({ message: 'Lab order successfully deleted', data: lab_order })
+      json_response({ message: 'Lab order successfully deleted' })
     else
       json_response({ message: 'Failed to delete lab order' }, :bad_request)
     end

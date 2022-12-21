@@ -29,7 +29,7 @@ class Api::V1::BloodGroupsController < ApplicationController
 
   def destroy
     if @blood_group.destroy
-      json_response({ message: 'Blood group successfully deleted', data: @blood_group })
+      json_response({ message: 'Blood group successfully deleted' })
     else
       json_response({ message: 'Failed to deleted blood group' }, :bad_request)
     end
