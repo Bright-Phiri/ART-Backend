@@ -3,20 +3,20 @@
 class Api::V1::LabOrdersController < ApplicationController
   before_action :set_lab_order, only: [:update, :destroy]
   def index
-    json_response({ message: 'lab orders loaded', data: LabOrder.active_status })
+    render json: { message: 'lab orders loaded', data: LabOrder.active_status }, status: :ok
   end
 
   def archived
-    json_response({ message: 'lab orders loaded', data: LabOrder.archived_status })
+    render json: { message: 'lab orders loaded', data: LabOrder.archived_status }, status: :ok
   end
 
   def show
     patient = Patient.find(params[:patient_id])
     lab_orders = patient.lab_orders
     if lab_orders.empty?
-      json_response({ message: 'Lab orders not recorded for this patient' }, :not_found)
+      render json: { message: 'Lab orders not recorded for this patient' }, status: :not_found
     else
-      json_response({ message: 'Lab orders loaded', data: lab_orders })
+      render json: { message: 'Lab orders loaded', data: lab_orders }, status: :ok
     end
   end
 
@@ -24,26 +24,23 @@ class Api::V1::LabOrdersController < ApplicationController
     patient = Patient.find(params[:patient_id])
     lab_order = patient.lab_orders.create(lab_order_params)
     if lab_order.persisted?
-      json_response({ message: 'lab order successfully added to patient', data: lab_order }, :created)
+      render json: { message: 'lab order successfully added to patient', data: lab_order }, status: :created
     else
-      json_response({ message: 'Failed to add lab order', errors: lab_order.errors.full_messages }, :unprocessable_entity)
+      render json: { message: 'Failed to add lab order', errors: lab_order.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     if @lab_order.update(lab_order_params)
-      json_response({ message: 'lab order successfully updated', data: @lab_order })
+      render json: { message: 'lab order successfully updated', data: @lab_order }, status: :ok
     else
-      json_response({ message: 'Failed to update lab order', errors: @lab_order.errors.full_messages }, :unprocessable_entity)
+      render json: { message: 'Failed to update lab order', errors: @lab_order.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @lab_order.destroy
-      json_response({ message: 'Lab order successfully deleted' })
-    else
-      json_response({ message: 'Failed to delete lab order' }, :bad_request)
-    end
+    @lab_order.destroy!
+    head :no_content
   end
 
   private

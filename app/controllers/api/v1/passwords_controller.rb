@@ -8,9 +8,9 @@ class Api::V1::PasswordsController < ApplicationController
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
     if @user.save
-      json_response({ message: 'Password successfully updated' })
+      render json: { message: 'Password successfully updated' }, status: :ok
     else
-      json_response({ message: 'Failed to update password', errors: @user.errors.full_messages }, :unprocessable_entity)
+      render json: { message: 'Failed to update password', errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -21,7 +21,7 @@ class Api::V1::PasswordsController < ApplicationController
     user.transaction do
       user.generate_password_token!
       UserMailer.with(user:).password_reset.deliver_later
-      json_response({ message: 'A reset password link has been sent to your email' })
+      render json: { message: 'A reset password link has been sent to your email' }, status: :Ok
     end
   end
 
@@ -29,12 +29,12 @@ class Api::V1::PasswordsController < ApplicationController
     user = User.find_by(reset_password_token: token)
     if user.present? && user.password_token_valid?
       if user.reset_password!(params[:password], params[:password_confirmation])
-        json_response({ message: 'Password successfully changed' })
+        render json: { message: 'Password successfully changed' }, status: :ok
       else
-        json_response({ message: 'Failed to update password', errors: user.errors.full_messages }, :unprocessable_entity)
+        render json: { message: 'Failed to update password', errors: user.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      json_response({ message: 'Token not valid or expired. Try generating a new token.' }, :bad_request)
+      render json: { message: 'Token not valid or expired. Try generating a new token.' }, status: :bad_request
     end
   end
 

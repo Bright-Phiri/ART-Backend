@@ -3,36 +3,33 @@
 class Api::V1::PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :update, :destroy]
   def index
-    json_response({ message: 'patients loaded', data: Patient.all })
+    render json: { message: 'patients loaded', data: Patient.all }, status: :ok
   end
 
   def show
-    json_response({ message: 'patient loaded', data: @patient })
+    render json: { message: 'patient loaded', data: @patient }, status: :ok
   end
 
   def create
     patient = Patient.new(patient_params)
     if patient.save
-      json_response({ message: 'patient successfully added', data: patient }, :created)
+      render json: { message: 'patient successfully added', data: patient }, status: :created
     else
-      json_response({ message: 'Failed to add patient', errors: patient.errors.full_messages }, :unprocessable_entity)
+      render json: { message: 'Failed to add patient', errors: patient.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
     if @patient.update(patient_params)
-      json_response({ message: 'patient successfully updated', data: @patient })
+      render json: { message: 'patient successfully updated', data: @patient }, status: :ok
     else
-      json_response({ message: 'Failed to update patient', errors: @patient.errors.full_messages }, :unprocessable_entity)
+      render json: { message: 'Failed to update patient', errors: @patient.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @patient.destroy
-      json_response({ message: 'patient successfully deleted' })
-    else
-      json_response({ message: 'Failed to delete patient' }, :bad_request)
-    end
+    @patient.destroy!
+    head :no_content
   end
 
   private
