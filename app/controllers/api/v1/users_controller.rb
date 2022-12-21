@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   def index
     users = User.excluding(User.find_by(role: 'Admin'))
-    render json: { message: 'users loaded', data: UserSerializer.new(users).serializable_hash }, status: :Ok
+    render json: { message: 'users loaded', data: UserSerializer.new(users).serializable_hash }, status: :ok
   end
 
   def show
