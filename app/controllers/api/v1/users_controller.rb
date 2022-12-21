@@ -37,7 +37,7 @@ class Api::V1::UsersController < ApplicationController
 
   def set_admin
     if User.exists?
-      render json: { message: 'You dont have required privilege to complete this action' }, status: :bad_request
+      render json: { message: 'You dont have required privilege to complete this action' }, status: :forbidden
     else
       user = User.new(user_params.merge(role: 'Admin'))
       if user.save

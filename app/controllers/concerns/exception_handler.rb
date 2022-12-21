@@ -8,27 +8,27 @@ module ExceptionHandler
 
   included do
     rescue_from ActiveRecord::RecordNotFound do |exception|
-      json_response({ message: exception.message }, :not_found)
+      render json: { message: exception.message }, status: :not_found
     end
 
     rescue_from ExceptionHandler::InvalidUsername do |exception|
-      json_response({ message: exception.message }, :not_found)
+      render json: { message: exception.message }, status: :not_found
     end
 
     rescue_from ExceptionHandler::InvalidEmail do |exception|
-      json_response({ message: exception.message }, :not_found)
+      render json: { message: exception.message }, status: :not_found
     end
 
     rescue_from ExceptionHandler::LabOrderError do |exception|
-      json_response({ message: exception.message }, :bad_request)
+      render json: { message: exception.message }, status: :bad_request
     end
 
     rescue_from ActiveRecord::RecordInvalid do |exception|
-      json_response({ message: exception.message }, :unprocessable_entity)
+      render json: { message: exception.message }, status: :unprocessable_entity
     end
 
     rescue_from Twilio::REST::TwilioError do |exception|
-      json_response({ message: exception.message }, :bad_request)
+      render json: { message: exception.message }, status: :service_unavailable
     end
   end
 end
