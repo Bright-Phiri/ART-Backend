@@ -9,7 +9,7 @@ class Api::V1::SessionsController < ApplicationController
 
       if @user&.authenticate(params[:password])
         token = encode_token({ user_id: @user.id })
-        render json: { message: 'Access granted', user: @user, token:, avatar: url_for(@user.avatar) }, status: :ok
+        render json: { message: 'Access granted', user: UserRepresenter.new(@user).as_json, token: token }
       else
         render json: { message: 'Invalid username or password' }, status: :bad_request
       end

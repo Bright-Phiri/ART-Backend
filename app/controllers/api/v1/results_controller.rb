@@ -2,7 +2,8 @@
 
 class Api::V1::ResultsController < ApplicationController
   def index
-    render json: { message: 'results loaded', data: Result.all }, status: :ok
+    lab_order_results = Result.all
+    render json: { message: 'results loaded', data: ResultsRepresenter.new(lab_order_results).as_json }, status: :ok
   end
 
   def show
