@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount ActionCable.server => '/cable'
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
           resources :results, except: :index
         end
       end
-      delete 'delete_all', action: :destroy_all, controller: 'lab_orders_archieve'
       get 'lab_orders', action: :index, controller: 'lab_orders'
       get 'lab_orders_archive', action: :archived, controller: 'lab_orders'
       get 'verify_lab_order/:qrcode', action: :verify, controller: 'results'
