@@ -27,6 +27,10 @@ module ExceptionHandler
       render json: { message: exception.message }, status: :unprocessable_entity
     end
 
+    rescue_from ActiveRecord::RecordNotDestroyed do |exception|
+      render json: { message: exception.message }, status: :unprocessable_entity
+    end
+
     rescue_from Twilio::REST::TwilioError do |exception|
       render json: { message: exception.message }, status: :service_unavailable
     end
