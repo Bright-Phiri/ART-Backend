@@ -12,7 +12,7 @@ class Api::V1::ResultsController < ApplicationController
     if results.nil?
       render json: { message: 'Lab test results not recorded' }, status: :not_found
     else
-      render json: { message: 'results loaded', data: results }, status: :ok
+      render json: { message: 'results loaded', data: ResultRepresenter.new(results).as_json }, status: :ok
     end
   end
 
@@ -20,7 +20,7 @@ class Api::V1::ResultsController < ApplicationController
     lab_order = LabOrder.find_by_qrcode!(params[:qrcode])
     if lab_order.valid?
       lab_order.toggle!(:verified)
-      render json: { message: 'Lab order verified', data: lab_order }, status: :Ok
+      render json: { message: 'Lab order verified', data: LabOrderRepresenter.new(lab_order).as_json }, status: :Ok
     else
       render json: { message: lab_order.errors.where(:base).first.full_message }, status: :bad_request
     end
@@ -39,7 +39,7 @@ class Api::V1::ResultsController < ApplicationController
 
   def update
     if @results.update(results_params)
-      render json: { message: 'Test results successfully updated', data: @results }, status: :ok
+      render json: { message: 'Test results successfully updated', data: ResultRepresenter.new(@results).as_json }, status: :ok
     else
       render json: { message: 'Failed to update test results', errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
