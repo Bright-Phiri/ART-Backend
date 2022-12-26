@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   mount ActionCable.server => '/cable'
-  namespace :api do
+  namespace :api do 
     namespace :v1 do
       resources :users
       post 'createaccount', action: :set_admin, controller: 'users'
