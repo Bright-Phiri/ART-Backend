@@ -12,10 +12,6 @@ class Patient < ApplicationRecord
   validates :phone, phone: true, uniqueness: true, numericality: { only_integer: true }
   after_commit :publish_to_dashboard, on: [:create, :destroy]
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
-
   private
 
   def date_of_birth_cannot_be_in_the_future
