@@ -7,7 +7,7 @@ class LabOrder < ApplicationRecord
   scope :verified_lab_orders, -> { unverified_lab_orders.invert_where }
   include Filterable
   enum :status, [:active, :archived], suffix: true, default: :active
-  belongs_to :patient
+  belongs_to :patient, counter_cache: true
   has_one :result, dependent: :destroy
   validates :qrcode, :blood_type, :requested_by, :taken_by, presence: true
   validates :tissue_name, presence: true, allow_blank: true

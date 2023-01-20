@@ -41,7 +41,7 @@ class Api::V1::UsersController < ApplicationController
     else
       user = User.new(user_params.merge(role: 'Admin'))
       if user.save
-        render json: { message: 'Account successfully created', data: UserRepresenter.new(user).as_json }, status: :ok
+        render json: { message: 'Account successfully created', data: UserRepresenter.new(user).as_json }, status: :created
       else
         render json: { message: 'Failed to create account', errors: user.errors.full_messages }, status: :unprocessable_entity
       end

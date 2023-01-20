@@ -12,11 +12,10 @@ class Api::V1::LabOrdersController < ApplicationController
 
   def show
     patient = Patient.find(params[:patient_id])
-    lab_orders = patient.lab_orders
-    if lab_orders.empty?
+    if patient.lab_orders.size.zero?
       render json: { message: 'Lab orders not recorded for this patient' }, status: :not_found
     else
-      render json: { message: 'Lab orders loaded', data: LabOrdersRepresenter.new(lab_orders).as_json }, status: :ok
+      render json: { message: 'Lab orders loaded', data: LabOrdersRepresenter.new(patient.lab_orders).as_json }, status: :ok
     end
   end
 
