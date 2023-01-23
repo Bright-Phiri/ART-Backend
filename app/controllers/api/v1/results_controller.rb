@@ -54,7 +54,7 @@ class Api::V1::ResultsController < ApplicationController
 
   def set_results
     lab_order = LabOrder.find(params[:lab_order_id])
-    @results = lab_order.result.find(params[:id])
+    @results = lab_order.result
   end
 
   def results_params
