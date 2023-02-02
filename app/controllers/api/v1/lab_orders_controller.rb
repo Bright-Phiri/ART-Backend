@@ -3,15 +3,15 @@
 class Api::V1::LabOrdersController < ApplicationController
   before_action :set_lab_order, only: [:update, :destroy]
   def index
-    render json: { message: 'lab orders loaded', data: LabOrdersRepresenter.new(LabOrder.active_status).as_json }, status: :ok
+    render json: { message: 'lab orders loaded', data: LabOrdersRepresenter.new(LabOrder.preload(:patient).active_status).as_json }, status: :ok
   end
 
   def archived
-    render json: { message: 'lab orders loaded', data: LabOrdersRepresenter.new(LabOrder.archived_status).as_json }, status: :ok
+    render json: { message: 'lab orders loaded', data: LabOrdersRepresenter.new(LabOrder.preload(:patient).archived_status).as_json }, status: :ok
   end
 
   def show
-    patient = Patient.find(params[:patient_id])
+    patient = Patient.preload(:patient).find(params[:patient_id])
     if patient.lab_orders.size.zero?
       render json: { message: 'Lab orders not recorded for this patient' }, status: :not_found
     else

@@ -10,7 +10,7 @@ class LabOrdersRepresenter
       {
         id: lab_order.id,
         qrcode: lab_order.qrcode,
-        patient_id: lab_order.patient_id,
+        patient_name: "#{lab_order.patient.first_name} #{lab_order.patient.first_name}",
         blood_type: lab_order.blood_type,
         tissue_name: lab_order.tissue_name,
         requested_by: lab_order.requested_by,
