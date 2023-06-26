@@ -11,6 +11,7 @@ class Patient < ApplicationRecord
   validates :gender, inclusion: { in: VALID_GENDERS }
   validates :phone, phone: true, uniqueness: true, numericality: { only_integer: true }
   after_commit :publish_to_dashboard, on: [:create, :destroy]
+  attr_readonly :lab_orders_count
 
   private
 
