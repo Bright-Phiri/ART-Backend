@@ -1,7 +1,7 @@
 ART API
 ===========================
 ## Requirements
-The following are required to run the API:
+The following are required to run the API: 
 
 - Ruby 2.7+
 - Rails 7.0+
